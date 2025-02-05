@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: IronSword_Item_SO
   m_EditorClassIdentifier: 
   itemName: Iron Sword
-  itemIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  itemIcon: {fileID: 0}
   itemType: 4
-  Rarity: 1
+  rarity: 1
   buyingPrice: 50
   sellingPrice: 25
   weight: 3
-  Quantity: 10
+  quantity: 10
   itemDescription: A standard sword forged from iron. Reliable but lacks magical
     properties.

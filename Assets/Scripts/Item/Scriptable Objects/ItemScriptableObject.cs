@@ -9,11 +9,11 @@ namespace ServiceLocator.Item
         public string itemName;
         public Sprite itemIcon;
         public ItemType itemType;
-        public ItemRarity Rarity;
+        public ItemRarity rarity;
         public float buyingPrice;
         public float sellingPrice;
         public float weight;
-        public int Quantity;
+        public int quantity;
         [TextArea] public string itemDescription;
 
     }

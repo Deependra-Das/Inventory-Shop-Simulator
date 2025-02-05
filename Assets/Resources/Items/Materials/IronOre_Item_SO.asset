@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: IronOre_Item_SO
   m_EditorClassIdentifier: 
   itemName: Iron Ore
-  itemIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  itemIcon: {fileID: 0}
   itemType: 2
-  Rarity: 1
+  rarity: 1
   buyingPrice: 15
   sellingPrice: 5
   weight: 2
-  Quantity: 15
+  quantity: 0
   itemDescription: A common ore used for forging basic weapons and armor.

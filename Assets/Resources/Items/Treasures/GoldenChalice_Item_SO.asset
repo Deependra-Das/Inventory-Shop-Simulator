@@ -15,10 +15,10 @@ MonoBehaviour:
   itemName: Golden Chalice
   itemIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   itemType: 3
-  Rarity: 1
+  rarity: 1
   buyingPrice: 250
   sellingPrice: 150
   weight: 1.5
-  Quantity: 6
+  quantity: 0
   itemDescription: A beautifully crafted golden chalice encrusted with gems, highly
     valuable to collectors.
