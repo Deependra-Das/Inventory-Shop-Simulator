@@ -38,6 +38,7 @@ namespace ServiceLocator.UI
 
         [Header("ItemDetails")]
         [SerializeField] private GameObject itemDetailsPanel;
+        [SerializeField] private Image itemIconImage;
         [SerializeField] private TextMeshProUGUI itemNameText;
         [SerializeField] private TextMeshProUGUI itemDescriptionText;
         [SerializeField] private TextMeshProUGUI itemTypeText;
@@ -106,7 +107,7 @@ namespace ServiceLocator.UI
         private void ShowItemDetails(ItemScriptableObject itemScriptableObject, UIContentPanels uiPanel)
         {
           itemDetailsPanel.SetActive(true);
-            Debug.Log(uiPanel);
+          itemIconImage.sprite = itemScriptableObject.itemIcon;
           itemNameText.text = itemScriptableObject.itemName;
           itemDescriptionText.text=itemScriptableObject.itemDescription;
           itemTypeText.text=itemScriptableObject.itemType.ToString();
