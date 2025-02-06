@@ -6,20 +6,17 @@ namespace ServiceLocator.Shop
 {
     public class ShopService
     {
-        private ShopScriptableObject _shopData;
         private ShopController shopController;
-        public ShopService(ShopScriptableObject shopData, GameObject shopView)
+        public ShopService(ShopScriptableObject shopCurrentData, GameObject shopView)
         {
-            shopController = new ShopController(_shopData, shopView);
-
-            this._shopData = shopData;
+            shopController = new ShopController(shopCurrentData, shopView);
 
         }
         ~ShopService() { }
 
-        public void InitializeShop(ItemService itemService)
+        public void InitializeShop(ShopScriptableObject shopInitialData, ItemService itemService)
         {
-            foreach (var itemData in _shopData.shopItemList)
+            foreach (var itemData in shopInitialData.shopItemList)
             {
                 shopController.AddNewItemInShop(itemData, itemService);
             }

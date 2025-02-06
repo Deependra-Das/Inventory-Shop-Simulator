@@ -16,7 +16,8 @@ namespace ServiceLocator.Main
 
         [SerializeField] private ItemView _itemView;
 
-        [SerializeField] private ShopScriptableObject _shopData;
+        [SerializeField] private ShopScriptableObject _shopCurrentData;
+        [SerializeField] private ShopScriptableObject _shopInitialData;
 
         [SerializeField] private GameObject _shopView;
 
@@ -29,12 +30,12 @@ namespace ServiceLocator.Main
         private void CreateServices()
         {
             itemService = new ItemService(_itemView);
-            shopService = new ShopService(_shopData, _shopView);
+            shopService = new ShopService(_shopCurrentData, _shopView);
         }
 
         private void InjectDependencies()
         {
-            shopService.InitializeShop(itemService);
+            shopService.InitializeShop(_shopInitialData, itemService);
         }
     }
 }
