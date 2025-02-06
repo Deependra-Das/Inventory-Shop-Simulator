@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using ServiceLocator.Item;
+using ServiceLocator.Shop;
+using System;
 
 namespace ServiceLocator.UI
 {
@@ -28,13 +31,19 @@ namespace ServiceLocator.UI
         [SerializeField] private Image currencyImage;
         [SerializeField] private TextMeshProUGUI currencyText;
 
+        [Header("Filters")]
+        [SerializeField] private GameObject filterPanel;
+        [SerializeField] private GameObject filterContent;
+        [SerializeField] private GameObject filterButtonPrefab;
+
         public UIService() {}
 
         public void Initialize(EventService eventService)
         {
             this._eventService = eventService;
             _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
-            Debug.Log("Initialize");
+
+            AddFilterButtons();
         }
 
         ~UIService()
@@ -44,10 +53,8 @@ namespace ServiceLocator.UI
 
         public GameObject CreateItemButtonPrefab(UIContentPanels uiPanel)
         {
-            Debug.Log("Invoked");
             Transform newTransform = GetPanelTransform(uiPanel);
-            Debug.Log(uiPanel);
-            GameObject newObject = Object.Instantiate(itemButtonPrefab, newTransform);
+            GameObject newObject = UnityEngine.Object.Instantiate(itemButtonPrefab, newTransform);
 
             return newObject;
         }
@@ -60,9 +67,27 @@ namespace ServiceLocator.UI
                     return inventoryContent.transform;
                 case UIContentPanels.Shop:
                     return shopContent.transform;
+                case UIContentPanels.Filters:
+                    return filterContent.transform;
                 default:
                     return null;
             }
+        }
+
+        private void AddFilterButtons()
+        {
+            foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)))
+            {
+                CreateFilterButtonPrefab(itemType);
+            }
+
+        }
+
+        private void CreateFilterButtonPrefab(ItemType itemType)
+        {
+            Transform newTransform = GetPanelTransform(UIContentPanels.Filters);
+            GameObject newObject = UnityEngine.Object.Instantiate(filterButtonPrefab, newTransform);
+            newObject.GetComponentInChildren<TMP_Text>().text = itemType.ToString();
         }
 
     }

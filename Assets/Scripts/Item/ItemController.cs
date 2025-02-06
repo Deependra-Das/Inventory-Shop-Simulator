@@ -12,13 +12,9 @@ namespace ServiceLocator.Item
         public ItemController(ItemScriptableObject itemScriptableObject, EventService eventService, UIContentPanels uiPanel) 
         {
             this._itemScriptableObject = itemScriptableObject;
-
-            Debug.Log(uiPanel);
-            //_itemView =
-              GameObject x=  eventService.OnCreateItemButtonUIEvent.Invoke<GameObject>(uiPanel);
-            //_itemView.SetController(this);
-            //_itemView.SetViewData();
-            //_itemView.transform.SetParent(shopView.transform);
+            _itemView =  eventService.OnCreateItemButtonUIEvent.Invoke<GameObject>(uiPanel).GetComponent<ItemView>();
+            _itemView.SetController(this);
+            _itemView.SetViewData();
         }
 
         ~ItemController() { }
