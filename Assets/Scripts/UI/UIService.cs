@@ -36,13 +36,26 @@ namespace ServiceLocator.UI
         [SerializeField] private GameObject filterContent;
         [SerializeField] private GameObject filterButtonPrefab;
 
+        [Header("ItemDetails")]
+        [SerializeField] private GameObject itemDetailsPanel;
+        [SerializeField] private TextMeshProUGUI itemNameText;
+        [SerializeField] private TextMeshProUGUI itemDescriptionText;
+        [SerializeField] private TextMeshProUGUI itemTypeText;
+        [SerializeField] private TextMeshProUGUI itemRarityText;
+        [SerializeField] private TextMeshProUGUI itemWeightText;
+        [SerializeField] private TextMeshProUGUI itemQuanityInShopText;
+        [SerializeField] private TextMeshProUGUI itemQuanityInInventoryText;
+        [SerializeField] private TextMeshProUGUI itemBuyingPriceText;
+        [SerializeField] private TextMeshProUGUI itemSellingPriceText;
+
         public UIService() {}
 
         public void Initialize(EventService eventService)
         {
             this._eventService = eventService;
             _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
-
+            _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
+            itemDetailsPanel.SetActive(false);
             AddFilterButtons();
         }
 
@@ -90,5 +103,19 @@ namespace ServiceLocator.UI
             newObject.GetComponentInChildren<TMP_Text>().text = itemType.ToString();
         }
 
+        private void ShowItemDetails(ItemScriptableObject itemScriptableObject, UIContentPanels uiPanel)
+        {
+          itemDetailsPanel.SetActive(true);
+            Debug.Log(uiPanel);
+          itemNameText.text = itemScriptableObject.itemName;
+          itemDescriptionText.text=itemScriptableObject.itemDescription;
+          itemTypeText.text=itemScriptableObject.itemType.ToString();
+          itemRarityText.text=itemScriptableObject.rarity.ToString();
+          itemWeightText.text=itemScriptableObject.weight.ToString();
+          itemQuanityInShopText.text="TBD";
+          itemQuanityInInventoryText.text= "TBD";
+          itemBuyingPriceText.text=itemScriptableObject.buyingPrice.ToString();
+          itemSellingPriceText.text=itemScriptableObject.sellingPrice.ToString();
+        }
     }
 }

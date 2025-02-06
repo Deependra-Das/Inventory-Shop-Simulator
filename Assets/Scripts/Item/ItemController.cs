@@ -1,6 +1,8 @@
 using ServiceLocator.Event;
 using ServiceLocator.UI;
+using UnityEditor.MPE;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ServiceLocator.Item
 {
@@ -8,16 +10,41 @@ namespace ServiceLocator.Item
     {
         private ItemScriptableObject _itemScriptableObject;
         private ItemView _itemView;
+        private Event.EventService _eventService;
+        private UIContentPanels _uiPanel;
 
-        public ItemController(ItemScriptableObject itemScriptableObject, EventService eventService, UIContentPanels uiPanel) 
+        public ItemController(ItemScriptableObject itemScriptableObject, Event.EventService eventService, UIContentPanels uiPanel) 
         {
+            this._eventService = eventService;
             this._itemScriptableObject = itemScriptableObject;
-            _itemView =  eventService.OnCreateItemButtonUIEvent.Invoke<GameObject>(uiPanel).GetComponent<ItemView>();
+            this._uiPanel = uiPanel;
+            _itemView = _eventService.OnCreateItemButtonUIEvent.Invoke<GameObject>(uiPanel).GetComponent<ItemView>();
             _itemView.SetController(this);
             _itemView.SetViewData();
+            SetListenerToItemButton();
         }
 
         ~ItemController() { }
+
+        private void SetListenerToItemButton()
+        {
+            Button button = _itemView.gameObject.GetComponent<Button>();
+            if (button != null)
+            {
+                button.onClick.AddListener(() => ItemButtonClicked());
+            }
+            else
+            {
+                Debug.LogError("Button component missing in ItemView Prefab!");
+            }
+        }
+
+        private void ItemButtonClicked()
+        {
+            _eventService.OnItemButtonClickEvent.Invoke(_itemScriptableObject, _uiPanel);
+
+        }
+
 
         public string ItemName { get => _itemScriptableObject.itemName; }
 
