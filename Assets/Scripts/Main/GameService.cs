@@ -13,6 +13,8 @@ namespace ServiceLocator.Main
     {
         public ItemService itemService;
         public ShopService shopService;
+        public UIService uiService;
+        public EventService eventService;
 
         [SerializeField] private ItemView _itemView;
 
@@ -29,13 +31,18 @@ namespace ServiceLocator.Main
 
         private void CreateServices()
         {
-            itemService = new ItemService(_itemView);
-            shopService = new ShopService(_shopCurrentData, _shopView);
+            eventService = new EventService();
+            itemService = new ItemService();
+            shopService = new ShopService(_shopCurrentData);
+          
         }
 
         private void InjectDependencies()
         {
-            shopService.InitializeShop(_shopInitialData, itemService);
+            itemService.Initialize(eventService);
+            uiService.Initialize(eventService);
+            shopService.Initialize(_shopInitialData, itemService);
+            
         }
     }
 }

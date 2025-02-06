@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 25541474}
   - component: {fileID: 25541473}
   m_Layer: 5
-  m_Name: Inventory_View
+  m_Name: Inventory_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2417,7 +2417,7 @@ GameObject:
   - component: {fileID: 487082914}
   - component: {fileID: 487082913}
   m_Layer: 5
-  m_Name: Item_Filter_View
+  m_Name: Item_Filter_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3958,7 +3958,7 @@ GameObject:
   - component: {fileID: 745737076}
   - component: {fileID: 745737075}
   m_Layer: 5
-  m_Name: Notification_View
+  m_Name: Notification_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4907,7 +4907,7 @@ GameObject:
   - component: {fileID: 1020136423}
   - component: {fileID: 1020136422}
   m_Layer: 5
-  m_Name: Currency_View
+  m_Name: Currency_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6986,6 +6986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e94e4b62c4d7cf4c906d34b6a6d91f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiService: {fileID: 1799412188}
   _itemView: {fileID: 4395068359699496912, guid: c5c0924cf0d5d2649b31f9e06373c6eb, type: 3}
   _shopCurrentData: {fileID: 11400000, guid: 1148c42205c6fd440889325f5d576523, type: 2}
   _shopInitialData: {fileID: 11400000, guid: 3cf43c982f3233242afe1c4b65e15791, type: 2}
@@ -7305,7 +7306,7 @@ GameObject:
   - component: {fileID: 1576203364}
   - component: {fileID: 1576203363}
   m_Layer: 5
-  m_Name: Item_Details_View
+  m_Name: Item_Details_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8193,6 +8194,7 @@ GameObject:
   - component: {fileID: 1799412186}
   - component: {fileID: 1799412185}
   - component: {fileID: 1799412184}
+  - component: {fileID: 1799412188}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -8288,6 +8290,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1799412188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799412183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bafda26ebe3d4b4468592097a5f552a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemButtonPrefab: {fileID: 78248345336940722, guid: c5c0924cf0d5d2649b31f9e06373c6eb, type: 3}
+  shopPanel: {fileID: 2086512860}
+  shopContent: {fileID: 800229374}
+  inventoryPanel: {fileID: 25541471}
+  inventoryContent: {fileID: 818588958}
+  inventoryWeightSlider: {fileID: 868962836}
+  inventoryWeightText: {fileID: 1465758495}
+  currencyPanel: {fileID: 1020136420}
+  currencyImage: {fileID: 241669151}
+  currencyText: {fileID: 32820373}
 --- !u!1 &1842230136
 GameObject:
   m_ObjectHideFlags: 0
@@ -9209,7 +9233,7 @@ GameObject:
   - component: {fileID: 2086512863}
   - component: {fileID: 2086512862}
   m_Layer: 5
-  m_Name: Shop_View
+  m_Name: Shop_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,21 +1,24 @@
+using ServiceLocator.Event;
+using ServiceLocator.UI;
 using UnityEngine;
 
 namespace ServiceLocator.Item
 {
     public class ItemController
     {
-
         private ItemScriptableObject _itemScriptableObject;
         private ItemView _itemView;
 
-        public ItemController(ItemScriptableObject itemScriptableObject, ItemView itemView, GameObject shopView) 
+        public ItemController(ItemScriptableObject itemScriptableObject, EventService eventService, UIContentPanels uiPanel) 
         {
             this._itemScriptableObject = itemScriptableObject;
 
-            _itemView = Object.Instantiate(itemView, shopView.transform);
-            _itemView.SetController(this);
-            _itemView.SetViewData();
-            _itemView.transform.SetParent(shopView.transform);
+            Debug.Log(uiPanel);
+            //_itemView =
+              GameObject x=  eventService.OnCreateItemButtonUIEvent.Invoke<GameObject>(uiPanel);
+            //_itemView.SetController(this);
+            //_itemView.SetViewData();
+            //_itemView.transform.SetParent(shopView.transform);
         }
 
         ~ItemController() { }

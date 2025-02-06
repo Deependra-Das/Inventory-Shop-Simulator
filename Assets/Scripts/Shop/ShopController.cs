@@ -7,13 +7,11 @@ namespace ServiceLocator.Shop
     public class ShopController
     {
         private ShopScriptableObject _shopCurrentData;
-        private GameObject _shopView;
         private List<ItemController> itemControllers;
 
-        public ShopController(ShopScriptableObject shopCurrentData, GameObject shopView)
+        public ShopController(ShopScriptableObject shopCurrentData)
         {
             this._shopCurrentData = shopCurrentData;
-            this._shopView = shopView;
            itemControllers = new List<ItemController>();
         }
 
@@ -23,7 +21,7 @@ namespace ServiceLocator.Shop
         }
         public void AddNewItemInShop(ItemScriptableObject itemData, ItemService itemService)
         {
-            ItemController itemController = itemService.CreateItem(itemData, _shopView);
+            ItemController itemController = itemService.CreateItem(itemData, UI.UIContentPanels.Shop);
             _shopCurrentData.shopItemList.Add(itemController.ItemData);
             itemControllers.Add(itemController);
         }
