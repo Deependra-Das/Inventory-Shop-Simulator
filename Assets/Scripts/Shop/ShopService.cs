@@ -14,9 +14,9 @@ namespace ServiceLocator.Shop
         }
         ~ShopService() { }
 
-        public void Initialize(ShopScriptableObject shopInitialData, ItemService itemService)
+        public void Initialize(ItemDatabaseScriptableObject shopInitialData, ItemService itemService)
         {
-            foreach (var itemData in shopInitialData.shopItemList)
+            foreach (var itemData in shopInitialData.itemDataList)
             {
                 shopController.AddNewItemInShop(itemData, itemService);
             }

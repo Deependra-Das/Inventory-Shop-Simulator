@@ -4,20 +4,20 @@ namespace ServiceLocator.Inventory
 {
     public class InventoryService
     {
-        private InventoryController inventoryController;
-        public InventoryService(InventoryScriptableObject inventoryCurrentData)
-        {
-            inventoryController = new InventoryController(inventoryCurrentData);
+        //private InventoryController inventoryController;
+        //public InventoryService(InventoryScriptableObject inventoryCurrentData)
+        //{
+        //    inventoryController = new InventoryController(inventoryCurrentData);
 
-        }
-        ~InventoryService() { }
+        //}
+        //~InventoryService() { }
 
-        public void Initialize(InventoryScriptableObject inventoryInitialData, ItemService itemService)
-        {
-            foreach (var itemData in inventoryInitialData.inventoryItemList)
-            {
-                inventoryController.AddNewItemInInventory(itemData, itemService);
-            }
-        }
+        //public void Initialize(InventoryScriptableObject inventoryInitialData, ItemService itemService)
+        //{
+        //    foreach (var itemData in inventoryInitialData.inventoryItemList)
+        //    {
+        //        inventoryController.AddNewItemInInventory(itemData, itemService);
+        //    }
+        //}
     }
 }

@@ -29,7 +29,7 @@ namespace ServiceLocator.Item
             if(_itemController!=null)
             {
                 _iconImage.sprite = _itemController.ItemIcon;
-                //_quantityText.text = _itemController.Quantity.ToString();
+                _quantityText.text = _itemController.Quantity.ToString();
             }
            
         }
