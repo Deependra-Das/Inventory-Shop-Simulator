@@ -38,6 +38,7 @@ namespace ServiceLocator.Item
 
         public string ItemDescription { get => _itemScriptableObject.itemDescription; }
 
+        public ItemScriptableObject ItemData { get => _itemScriptableObject; }
 
     }
 }

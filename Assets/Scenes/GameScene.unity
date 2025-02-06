@@ -6987,8 +6987,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemView: {fileID: 4395068359699496912, guid: c5c0924cf0d5d2649b31f9e06373c6eb, type: 3}
-  _ironSword_Item_SO: {fileID: 11400000, guid: e5bf7ef12f28f9b47ba9f2fe4282b1cd, type: 2}
-  _healthPotion_Item_SO: {fileID: 11400000, guid: 6db042e5728536c4496652dd07423e5b, type: 2}
+  _shopCurrentData: {fileID: 11400000, guid: 1148c42205c6fd440889325f5d576523, type: 2}
+  _shopInitialData: {fileID: 11400000, guid: 3cf43c982f3233242afe1c4b65e15791, type: 2}
   _shopView: {fileID: 800229374}
 --- !u!1 &1495468439
 GameObject:
