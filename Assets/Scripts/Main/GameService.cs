@@ -20,10 +20,10 @@ namespace ServiceLocator.Main
 
         [SerializeField] private ItemView _itemView;
 
+        [SerializeField] private ItemDatabaseScriptableObject _itemDatabase;
         [SerializeField] private ShopScriptableObject _shopCurrentData;
-        [SerializeField] private ShopScriptableObject _shopInitialData;
         [SerializeField] private InventoryScriptableObject _inventoryCurrentData;
-        [SerializeField] private InventoryScriptableObject _inventoryInitialData;
+
 
         [SerializeField] private GameObject _shopView;
 
@@ -45,8 +45,8 @@ namespace ServiceLocator.Main
         {
             itemService.Initialize(eventService);
             uiService.Initialize(eventService);
-            shopService.Initialize(_shopInitialData, itemService);
-            inventoryService.Initialize(_inventoryInitialData, itemService);
+            shopService.Initialize(_itemDatabase, itemService);
+            inventoryService.Initialize(_itemDatabase, itemService);
 
         }
     }

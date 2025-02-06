@@ -8,15 +8,15 @@ namespace ServiceLocator.Item
 {
     public class ItemController
     {
-        private ItemScriptableObject _itemScriptableObject;
+        private ItemWithQuantity _itemDataObj;
         private ItemView _itemView;
         private Event.EventService _eventService;
         private UIContentPanels _uiPanel;
 
-        public ItemController(ItemScriptableObject itemScriptableObject, Event.EventService eventService, UIContentPanels uiPanel) 
+        public ItemController(ItemWithQuantity itemDataObj, Event.EventService eventService, UIContentPanels uiPanel) 
         {
             this._eventService = eventService;
-            this._itemScriptableObject = itemScriptableObject;
+            this._itemDataObj = itemDataObj;
             this._uiPanel = uiPanel;
             _itemView = _eventService.OnCreateItemButtonUIEvent.Invoke<GameObject>(uiPanel).GetComponent<ItemView>();
             _itemView.SetController(this);
@@ -41,30 +41,30 @@ namespace ServiceLocator.Item
 
         private void ItemButtonClicked()
         {
-            _eventService.OnItemButtonClickEvent.Invoke(_itemScriptableObject, _uiPanel);
+            _eventService.OnItemButtonClickEvent.Invoke(_itemDataObj, _uiPanel);
 
         }
 
 
-        public string ItemName { get => _itemScriptableObject.itemName; }
+        public string ItemName { get => _itemDataObj.item.itemName; }
 
-        public Sprite ItemIcon { get => _itemScriptableObject.itemIcon; }
+        public Sprite ItemIcon { get => _itemDataObj.item.itemIcon; }
 
-        public ItemType ItemType { get => _itemScriptableObject.itemType; }
+        public ItemType ItemType { get => _itemDataObj.item.itemType; }
 
-        public ItemRarity Rarity { get => _itemScriptableObject.rarity; }
+        public ItemRarity Rarity { get => _itemDataObj.item.rarity; }
 
-        public float BuyingPrice { get => _itemScriptableObject.buyingPrice; }
+        public float BuyingPrice { get => _itemDataObj.item.buyingPrice; }
 
-        public float SellingPrice { get => _itemScriptableObject.sellingPrice; }
+        public float SellingPrice { get => _itemDataObj.item.sellingPrice; }
 
-        public float Weight { get => _itemScriptableObject.weight; }
+        public float Weight { get => _itemDataObj.item.weight; }
 
-        public int Quantity { get => _itemScriptableObject.quantity; }
+        public int Quantity { get => _itemDataObj.quantity; }
 
-        public string ItemDescription { get => _itemScriptableObject.itemDescription; }
+        public string ItemDescription { get => _itemDataObj.item.itemDescription; }
 
-        public ItemScriptableObject ItemData { get => _itemScriptableObject; }
+        public ItemWithQuantity ItemData { get => _itemDataObj; }
 
     }
 }

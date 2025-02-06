@@ -17,9 +17,9 @@ namespace ServiceLocator.Shop
 
         ~ShopController() 
         {
-            this._shopCurrentData.shopItemList = new List<ItemScriptableObject>();
+            this._shopCurrentData.shopItemList = new List<ItemWithQuantity>();
         }
-        public void AddNewItemInShop(ItemScriptableObject itemData, ItemService itemService)
+        public void AddNewItemInShop(ItemWithQuantity itemData, ItemService itemService)
         {
             ItemController itemController = itemService.CreateItem(itemData, UI.UIContentPanels.Shop);
             _shopCurrentData.shopItemList.Add(itemController.ItemData);

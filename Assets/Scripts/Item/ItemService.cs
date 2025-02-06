@@ -7,7 +7,8 @@ namespace ServiceLocator.Item
     public class ItemService
     {
         private EventService _eventService;
-        private ItemScriptableObject _itemScriptableObject;
+        private ItemWithQuantity _itemDataObj;
+        private int _quantity;
         public ItemService() {}
 
         ~ItemService() { }
@@ -17,11 +18,10 @@ namespace ServiceLocator.Item
             _eventService = eventService;
         }
 
-        public ItemController CreateItem(ItemScriptableObject itemScriptableObject, UIContentPanels uiPanel)
+        public ItemController CreateItem(ItemWithQuantity itemData, UIContentPanels uiPanel)
         {
-            this._itemScriptableObject = itemScriptableObject;
-
-            return new ItemController(_itemScriptableObject, _eventService, uiPanel);
+            this._itemDataObj = itemData;
+            return new ItemController(_itemDataObj, _eventService, uiPanel);
 
         }
     }

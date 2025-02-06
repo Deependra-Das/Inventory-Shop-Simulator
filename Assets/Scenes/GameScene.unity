@@ -6843,8 +6843,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiService: {fileID: 1799412188}
   _itemView: {fileID: 4395068359699496912, guid: c5c0924cf0d5d2649b31f9e06373c6eb, type: 3}
+  _itemDatabase: {fileID: 11400000, guid: 692fa5aa29b5b81479effe6a657b989c, type: 2}
   _shopCurrentData: {fileID: 11400000, guid: 1148c42205c6fd440889325f5d576523, type: 2}
-  _shopInitialData: {fileID: 11400000, guid: 3cf43c982f3233242afe1c4b65e15791, type: 2}
   _inventoryCurrentData: {fileID: 11400000, guid: eab35ac5e1e23ca4e953a72e809a49b9, type: 2}
   _inventoryInitialData: {fileID: 11400000, guid: c124fd3f56436e04ca8c4a666b193536, type: 2}
   _shopView: {fileID: 800229374}

@@ -12,9 +12,9 @@ namespace ServiceLocator.Inventory
         }
         ~InventoryService() { }
 
-        public void Initialize(InventoryScriptableObject inventoryInitialData, ItemService itemService)
+        public void Initialize(ItemDatabaseScriptableObject inventoryInitialData, ItemService itemService)
         {
-            foreach (var itemData in inventoryInitialData.inventoryItemList)
+            foreach (var itemData in inventoryInitialData.itemDataList)
             {
                 inventoryController.AddNewItemInInventory(itemData, itemService);
             }

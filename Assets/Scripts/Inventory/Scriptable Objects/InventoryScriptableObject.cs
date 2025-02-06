@@ -10,7 +10,7 @@ namespace ServiceLocator.Inventory
         public float currencyOwned;
         public float maxWeight;
         public float currentWeight;
-        public List<ItemScriptableObject> inventoryItemList;
+        public List<ItemWithQuantity> inventoryItemList;
 
     }
 }

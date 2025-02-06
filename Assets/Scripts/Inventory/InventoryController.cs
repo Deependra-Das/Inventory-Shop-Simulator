@@ -17,9 +17,9 @@ namespace ServiceLocator.Inventory
 
         ~InventoryController()
         {
-            this._inventoryCurrentData.inventoryItemList = new List<ItemScriptableObject>();
+            this._inventoryCurrentData.inventoryItemList = new List<ItemWithQuantity>();
         }
-        public void AddNewItemInInventory(ItemScriptableObject itemData, ItemService itemService)
+        public void AddNewItemInInventory(ItemWithQuantity itemData, ItemService itemService)
         {
             ItemController itemController = itemService.CreateItem(itemData, UI.UIContentPanels.Inventory);
             _inventoryCurrentData.inventoryItemList.Add(itemController.ItemData);
