@@ -13,10 +13,11 @@ namespace ServiceLocator.Item
 
         ~ItemService() { }
 
-        public void CreateItem(ItemScriptableObject itemScriptableObject, GameObject shopView)
+        public ItemController CreateItem(ItemScriptableObject itemScriptableObject, GameObject shopView)
         {
             this._itemScriptableObject = itemScriptableObject;
-            ItemController itemController = new ItemController(_itemScriptableObject, _itemView, shopView);
+
+            return new ItemController(_itemScriptableObject, _itemView, shopView);
 
         }
     }
