@@ -60,7 +60,7 @@ namespace ServiceLocator.Item
 
         public float Weight { get => _itemScriptableObject.weight; }
 
-        public int Quantity { get => _itemScriptableObject.quantity; }
+        //public int Quantity { get => _itemScriptableObject.quantity; }
 
         public string ItemDescription { get => _itemScriptableObject.itemDescription; }
 
