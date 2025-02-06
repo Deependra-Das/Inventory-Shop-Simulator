@@ -3,6 +3,7 @@ using ServiceLocator.Item;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using ServiceLocator.Shop;
+using ServiceLocator.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace ServiceLocator.Main
     {
         public ItemService itemService;
         public ShopService shopService;
+        public InventoryService inventoryService;
         public UIService uiService;
         public EventService eventService;
 
@@ -20,6 +22,8 @@ namespace ServiceLocator.Main
 
         [SerializeField] private ShopScriptableObject _shopCurrentData;
         [SerializeField] private ShopScriptableObject _shopInitialData;
+        [SerializeField] private InventoryScriptableObject _inventoryCurrentData;
+        [SerializeField] private InventoryScriptableObject _inventoryInitialData;
 
         [SerializeField] private GameObject _shopView;
 
@@ -34,7 +38,7 @@ namespace ServiceLocator.Main
             eventService = new EventService();
             itemService = new ItemService();
             shopService = new ShopService(_shopCurrentData);
-          
+            inventoryService = new InventoryService(_inventoryCurrentData);
         }
 
         private void InjectDependencies()
@@ -42,7 +46,8 @@ namespace ServiceLocator.Main
             itemService.Initialize(eventService);
             uiService.Initialize(eventService);
             shopService.Initialize(_shopInitialData, itemService);
-            
+            inventoryService.Initialize(_inventoryInitialData, itemService);
+
         }
     }
 }
