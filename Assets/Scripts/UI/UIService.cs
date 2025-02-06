@@ -104,19 +104,19 @@ namespace ServiceLocator.UI
             newObject.GetComponentInChildren<TMP_Text>().text = itemType.ToString();
         }
 
-        private void ShowItemDetails(ItemScriptableObject itemScriptableObject, UIContentPanels uiPanel)
+        private void ShowItemDetails(ItemWithQuantity itemData, UIContentPanels uiPanel)
         {
           itemDetailsPanel.SetActive(true);
-          itemIconImage.sprite = itemScriptableObject.itemIcon;
-          itemNameText.text = itemScriptableObject.itemName;
-          itemDescriptionText.text=itemScriptableObject.itemDescription;
-          itemTypeText.text=itemScriptableObject.itemType.ToString();
-          itemRarityText.text=itemScriptableObject.rarity.ToString();
-          itemWeightText.text=itemScriptableObject.weight.ToString();
+          itemIconImage.sprite = itemData.item.itemIcon;
+          itemNameText.text = itemData.item.itemName;
+          itemDescriptionText.text = itemData.item.itemDescription;
+          itemTypeText.text = itemData.item.itemType.ToString();
+          itemRarityText.text = itemData.item.rarity.ToString();
+          itemWeightText.text = itemData.item.weight.ToString();
           itemQuanityInShopText.text="TBD";
           itemQuanityInInventoryText.text= "TBD";
-          itemBuyingPriceText.text=itemScriptableObject.buyingPrice.ToString();
-          itemSellingPriceText.text=itemScriptableObject.sellingPrice.ToString();
+          itemBuyingPriceText.text = itemData.item.buyingPrice.ToString();
+          itemSellingPriceText.text = itemData.item.sellingPrice.ToString();
         }
     }
 }

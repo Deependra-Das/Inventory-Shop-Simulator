@@ -21,29 +21,29 @@ namespace ServiceLocator.Item
             _itemView = _eventService.OnCreateItemButtonUIEvent.Invoke<GameObject>(uiPanel).GetComponent<ItemView>();
             _itemView.SetController(this);
             _itemView.SetViewData();
-            //SetListenerToItemButton();
+            SetListenerToItemButton();
         }
 
         ~ItemController() { }
 
-        //private void SetListenerToItemButton()
-        //{
-        //    Button button = _itemView.gameObject.GetComponent<Button>();
-        //    if (button != null)
-        //    {
-        //        button.onClick.AddListener(() => ItemButtonClicked());
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Button component missing in ItemView Prefab!");
-        //    }
-        //}
+        private void SetListenerToItemButton()
+        {
+            Button button = _itemView.gameObject.GetComponent<Button>();
+            if (button != null)
+            {
+                button.onClick.AddListener(() => ItemButtonClicked());
+            }
+            else
+            {
+                Debug.LogError("Button component missing in ItemView Prefab!");
+            }
+        }
 
-        //private void ItemButtonClicked()
-        //{
-        //    _eventService.OnItemButtonClickEvent.Invoke(_itemScriptableObject, _uiPanel);
+        private void ItemButtonClicked()
+        {
+            _eventService.OnItemButtonClickEvent.Invoke(_itemDataObj, _uiPanel);
 
-        //}
+        }
 
 
         public string ItemName { get => _itemDataObj.item.itemName; }
