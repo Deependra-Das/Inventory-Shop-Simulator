@@ -22,6 +22,7 @@ namespace ServiceLocator.Shop
         ~ShopController() 
         {
             this._shopCurrentData.shopItemList = new List<ItemWithQuantity>();
+            _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
         }
         public void AddNewItemInShop(ItemWithQuantity itemData, ItemService itemService)
         {
