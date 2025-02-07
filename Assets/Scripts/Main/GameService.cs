@@ -21,9 +21,6 @@ namespace ServiceLocator.Main
         [SerializeField] private ItemView _itemView;
 
         [SerializeField] private ItemDatabaseScriptableObject _itemDatabase;
-        [SerializeField] private ShopScriptableObject _shopCurrentData;
-        [SerializeField] private InventoryScriptableObject _inventoryCurrentData;
-
 
         [SerializeField] private GameObject _shopView;
 
