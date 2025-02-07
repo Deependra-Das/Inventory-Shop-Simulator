@@ -62,7 +62,6 @@ namespace ServiceLocator.UI
 
             filterButtonList = new List<GameObject>();
             AddFilterButtons();
-            
         }
 
         ~UIService()
@@ -112,6 +111,12 @@ namespace ServiceLocator.UI
             Transform newTransform = GetPanelTransform(UIContentPanels.Filters);
             GameObject filterButton = UnityEngine.Object.Instantiate(filterButtonPrefab, newTransform);
             return filterButton;
+        }
+
+        public void SelectFilterButtonAll()
+        {
+            FilterButtonView filterButtonView = filterButtonList[0].GetComponent<FilterButtonView>();
+            filterButtonView.ButtonSelectInvoke();
         }
 
         private void ShowItemDetails(ItemWithQuantity itemData, UIContentPanels uiPanel)

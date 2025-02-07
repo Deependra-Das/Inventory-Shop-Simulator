@@ -23,8 +23,13 @@ namespace ServiceLocator.UI
         private void OnFilterButtonClicked()
         {
             _eventService.OnFilterItemEvent.Invoke(_filterItemType);
-            Debug.Log(_filterItemType);
+        }
 
+        public void ButtonSelectInvoke()
+        {
+            _filterButton.Select();
+            _eventService.OnFilterItemEvent.Invoke(_filterItemType);
+            Debug.Log(_filterItemType);
         }
     }
 }
