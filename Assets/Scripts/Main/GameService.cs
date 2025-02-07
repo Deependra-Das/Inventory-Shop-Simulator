@@ -38,7 +38,7 @@ namespace ServiceLocator.Main
             eventService = new EventService();
             itemService = new ItemService();
             shopService = new ShopService();
-            //inventoryService = new InventoryService(_inventoryCurrentData);
+            inventoryService = new InventoryService();
         }
 
         private void InjectDependencies()
@@ -46,7 +46,7 @@ namespace ServiceLocator.Main
             itemService.Initialize(eventService);
             uiService.Initialize(eventService);
             shopService.Initialize(_itemDatabase, itemService, eventService);
-            //inventoryService.Initialize(_itemDatabase, itemService, eventService);
+            inventoryService.Initialize(_itemDatabase, itemService, eventService);
 
             uiService.SelectFilterButtonAll();
         }
