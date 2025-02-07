@@ -25,6 +25,7 @@ namespace ServiceLocator.UI
         [SerializeField] private GameObject inventoryContent;
         [SerializeField] private Slider inventoryWeightSlider;
         [SerializeField] private TextMeshProUGUI inventoryWeightText;
+        [SerializeField] private GameObject gatherButton;
 
         [Header("Currency")]
         [SerializeField] private GameObject currencyPanel;
@@ -62,6 +63,7 @@ namespace ServiceLocator.UI
 
             filterButtonList = new List<GameObject>();
             AddFilterButtons();
+            gatherButton.gameObject.GetComponent<Button>().onClick.AddListener(GatherButtonClicked);
         }
 
         ~UIService()
@@ -134,5 +136,9 @@ namespace ServiceLocator.UI
           itemSellingPriceText.text = itemData.SellingPrice.ToString();
         }
 
+        private void GatherButtonClicked()
+        {
+            _eventService.OnGatherResourcesEvent.Invoke();
+        }
     }
 }

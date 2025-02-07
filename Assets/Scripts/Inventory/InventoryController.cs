@@ -12,6 +12,7 @@ namespace ServiceLocator.Inventory
         private List<ItemController> itemControllersList;
         private EventService _eventService;
         private ItemService _itemService;
+        private ItemType _itemTypeSelectedFilter;
 
         public InventoryController(ItemDatabaseScriptableObject inventoryInitialData, EventService eventService, ItemService itemService)
         {
@@ -24,12 +25,16 @@ namespace ServiceLocator.Inventory
 
             itemControllersList = new List<ItemController>();
 
+            _itemTypeSelectedFilter = ItemType.All;
+
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
+            _eventService.OnGatherResourcesEvent.AddListener(OnGatherResources);
         }
 
         ~InventoryController()
         {
             _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
+            _eventService.OnGatherResourcesEvent.RemoveListener(OnGatherResources);
         }
 
         public void PopulateInventoryData()
@@ -52,7 +57,8 @@ namespace ServiceLocator.Inventory
 
         private void OnFilterButtonChange(ItemType type)
         {
-            UpdateInventoryUI(type);
+            _itemTypeSelectedFilter = type;
+            UpdateInventoryUI(_itemTypeSelectedFilter);
         }
 
         private void UpdateInventoryUI(ItemType type)
@@ -90,6 +96,67 @@ namespace ServiceLocator.Inventory
 
                 }
 
+            }
+
+
+        }
+
+        private void OnGatherResources()
+        {
+            List<int> randomItems = GetRandomItems();
+
+            Debug.Log("- " + itemControllersList.Count);
+
+            foreach (int item in randomItems)
+            {
+                itemControllersList[item].UpdateQuantity(itemControllersList[item].Quantity + GetRandomQuantity(itemControllersList[item].ItemType));
+                Debug.Log(itemControllersList[item].ItemName + " " + item);
+            }
+
+            UpdateInventoryUI(_itemTypeSelectedFilter);
+        }
+
+        private List<int> GetRandomItems()
+        {
+            List<int> selectedItems = new List<int>(new int[_inventoryModel.InventoryItemList.Count]);
+
+            int numberOfItemsToSelect = Random.Range(1, 4);  
+
+            for (int i = 0; i < numberOfItemsToSelect; i++)
+            {
+                int randomIndex = Random.Range(0, _inventoryModel.InventoryItemList.Count);
+                int selectedItem = randomIndex;
+
+                if (selectedItems[randomIndex] != selectedItem)
+                {
+                    selectedItems.Insert(randomIndex, selectedItem);
+                }
+               
+            }
+
+            Debug.Log("1 - " + selectedItems.Count);
+
+            return selectedItems;
+        }
+
+        private int GetRandomQuantity(ItemType itemType)
+        {
+            Debug.Log("- " + itemType);
+            switch (itemType)
+            {
+                case ItemType.Materials:
+                    return Random.Range(20, 100);
+
+                case ItemType.Weapons:
+                    return Random.Range(5, 10);
+
+                case ItemType.Consumables:
+                    return Random.Range(5, 25);
+
+                case ItemType.Treasures:
+                    return Random.Range(1, 5);
+                default:
+                    return 0;
             }
         }
     }

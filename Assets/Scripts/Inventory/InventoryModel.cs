@@ -7,11 +7,18 @@ namespace ServiceLocator.Inventory
     {
         private InventoryController _inventoryController;
 
-        private List<ItemModel> inventoryItemList;
+        private List<ItemModel> _inventoryItemList;
+
+        private float maxWeight;
+        private float currentWeight;
+        private int numberOfItemsToSelect;
 
         public InventoryModel()
         {
-            inventoryItemList = new List<ItemModel>();
+            _inventoryItemList = new List<ItemModel>();
+            maxWeight = 20.0f;
+            numberOfItemsToSelect = 5;
+            SetCurrentInventoryWeight();
         }
 
         ~InventoryModel() { }
@@ -23,14 +30,30 @@ namespace ServiceLocator.Inventory
 
         public void AddItem(ItemModel newItem)
         {
-            inventoryItemList.Add(newItem);
+            _inventoryItemList.Add(newItem);
         }
 
         public void RemoveItem(ItemModel item)
         {
-            inventoryItemList.Remove(item);
+            _inventoryItemList.Remove(item);
         }
 
+        public void SetCurrentInventoryWeight()
+        {
+            foreach (ItemModel item in _inventoryItemList)
+            {
+                currentWeight += (item.Weight * item.Quantity);
+            }
+
+        }
+
+        public float CurrentInventoryWeight { get => currentWeight; }
+
+        public float MaxInventoryWeight { get => maxWeight; }
+
+        public int NumberOfItemsToSelect { get => numberOfItemsToSelect; }
+
+        public List<ItemModel> InventoryItemList { get => _inventoryItemList; }
     }
 }
 
