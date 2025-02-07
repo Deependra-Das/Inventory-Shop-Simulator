@@ -66,5 +66,14 @@ namespace ServiceLocator.Item
 
         public ItemWithQuantity ItemData { get => _itemDataObj; }
 
+        public void ShowItemButtonView()
+        {
+            _itemView.ShowItemButtonView();
+        }
+
+        public void HideItemButtonView()
+        {
+            _itemView.HideItemButtonView();
+        }
     }
 }

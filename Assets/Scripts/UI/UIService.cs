@@ -49,6 +49,8 @@ namespace ServiceLocator.UI
         [SerializeField] private TextMeshProUGUI itemBuyingPriceText;
         [SerializeField] private TextMeshProUGUI itemSellingPriceText;
 
+        private List<GameObject> filterButtonList;
+
         public UIService() {}
 
         public void Initialize(EventService eventService)
@@ -57,6 +59,8 @@ namespace ServiceLocator.UI
             _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
             itemDetailsPanel.SetActive(false);
+
+            filterButtonList = new List<GameObject>();
             AddFilterButtons();
         }
 
@@ -92,16 +96,27 @@ namespace ServiceLocator.UI
         {
             foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)))
             {
-                CreateFilterButtonPrefab(itemType);
+                GameObject filterButton = CreateFilterButtonPrefab(itemType);
+
+                FilterButtonView filterButtonView = filterButton.GetComponent<FilterButtonView>();
+                filterButtonView.Initialize(itemType, _eventService);
+                filterButton.GetComponentInChildren<TMP_Text>().text = itemType.ToString();
+                filterButtonList.Add(filterButton);
             }
 
         }
 
-        private void CreateFilterButtonPrefab(ItemType itemType)
+        private GameObject CreateFilterButtonPrefab(ItemType itemType)
         {
             Transform newTransform = GetPanelTransform(UIContentPanels.Filters);
-            GameObject newObject = UnityEngine.Object.Instantiate(filterButtonPrefab, newTransform);
-            newObject.GetComponentInChildren<TMP_Text>().text = itemType.ToString();
+            GameObject filterButton = UnityEngine.Object.Instantiate(filterButtonPrefab, newTransform);
+            return filterButton;
+        }
+
+        public void SelectFilterButtonAll()
+        {
+            FilterButtonView filterButtonView = filterButtonList[0].GetComponent<FilterButtonView>();
+            filterButtonView.ButtonSelectInvoke();
         }
 
         private void ShowItemDetails(ItemWithQuantity itemData, UIContentPanels uiPanel)
@@ -118,5 +133,6 @@ namespace ServiceLocator.UI
           itemBuyingPriceText.text = itemData.item.buyingPrice.ToString();
           itemSellingPriceText.text = itemData.item.sellingPrice.ToString();
         }
+
     }
 }

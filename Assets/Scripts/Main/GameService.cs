@@ -45,9 +45,10 @@ namespace ServiceLocator.Main
         {
             itemService.Initialize(eventService);
             uiService.Initialize(eventService);
-            shopService.Initialize(_itemDatabase, itemService);
-            inventoryService.Initialize(_itemDatabase, itemService);
+            shopService.Initialize(_itemDatabase, itemService, eventService);
+            inventoryService.Initialize(_itemDatabase, itemService, eventService);
 
+            uiService.SelectFilterButtonAll();
         }
     }
 }

@@ -34,5 +34,14 @@ namespace ServiceLocator.Item
            
         }
 
+        public void ShowItemButtonView()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void HideItemButtonView()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
