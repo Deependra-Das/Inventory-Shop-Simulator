@@ -19,6 +19,6 @@ MonoBehaviour:
   buyingPrice: 50
   sellingPrice: 25
   weight: 3
-  quantity: 10
+  quantity: 0
   itemDescription: A standard sword forged from iron. Reliable but lacks magical
     properties.

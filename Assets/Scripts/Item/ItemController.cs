@@ -79,7 +79,8 @@ namespace ServiceLocator.Item
 
         public void UpdateQuantity(int newQuantity)
         {
-           _itemModel.UpdateQuantity(newQuantity);
+           _itemModel.UpdateQuantityData(newQuantity);
+            _itemView.UpdateQuantityView();
         }
     }
 }

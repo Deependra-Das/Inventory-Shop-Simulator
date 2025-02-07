@@ -55,6 +55,8 @@ namespace ServiceLocator.Shop
             {
                 item.UpdateQuantity(50);
             }
+
+            UpdateShopUI(ItemType.All);
         }
 
         public List<ItemController> GetAllShopItems() => itemControllersList;
@@ -62,9 +64,14 @@ namespace ServiceLocator.Shop
 
         private void OnFilterButtonChange(ItemType type)
         {
+            UpdateShopUI(type);
+        }
+
+        private void UpdateShopUI(ItemType type)
+        {
             foreach (ItemController itemController in itemControllersList)
             {
-                if(type == ItemType.All)
+                if (type == ItemType.All)
                 {
                     if (itemController.Quantity > 0)
                     {
@@ -94,9 +101,8 @@ namespace ServiceLocator.Shop
                     }
 
                 }
-             
-            }
 
+            }
         }
     }
 }

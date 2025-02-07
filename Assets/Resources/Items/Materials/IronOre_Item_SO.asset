@@ -19,5 +19,5 @@ MonoBehaviour:
   buyingPrice: 15
   sellingPrice: 5
   weight: 2
-  quantity: 50
+  quantity: 0
   itemDescription: A common ore used for forging basic weapons and armor.

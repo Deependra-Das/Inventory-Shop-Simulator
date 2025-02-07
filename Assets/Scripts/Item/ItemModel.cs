@@ -46,7 +46,7 @@ namespace ServiceLocator.Item
 
         public string ItemDescription { get; private set; }
 
-        public void UpdateQuantity(int newQuantity)
+        public void UpdateQuantityData(int newQuantity)
         {
             Quantity = newQuantity;
         }

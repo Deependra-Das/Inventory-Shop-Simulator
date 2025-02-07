@@ -19,6 +19,6 @@ MonoBehaviour:
   buyingPrice: 250
   sellingPrice: 150
   weight: 1.5
-  quantity: 5
+  quantity: 0
   itemDescription: A beautifully crafted golden chalice encrusted with gems, highly
     valuable to collectors.

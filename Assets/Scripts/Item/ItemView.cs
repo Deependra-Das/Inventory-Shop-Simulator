@@ -43,5 +43,10 @@ namespace ServiceLocator.Item
         {
             gameObject.SetActive(false);
         }
+
+        public void UpdateQuantityView()
+        {
+            _quantityText.text = _itemController.Quantity.ToString();
+        }
     }
 }
