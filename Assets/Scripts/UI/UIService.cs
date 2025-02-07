@@ -119,19 +119,19 @@ namespace ServiceLocator.UI
             filterButtonView.ButtonSelectInvoke();
         }
 
-        private void ShowItemDetails(ItemWithQuantity itemData, UIContentPanels uiPanel)
+        private void ShowItemDetails(ItemModel itemData, UIContentPanels uiPanel)
         {
           itemDetailsPanel.SetActive(true);
-          itemIconImage.sprite = itemData.item.itemIcon;
-          itemNameText.text = itemData.item.itemName;
-          itemDescriptionText.text = itemData.item.itemDescription;
-          itemTypeText.text = itemData.item.itemType.ToString();
-          itemRarityText.text = itemData.item.rarity.ToString();
-          itemWeightText.text = itemData.item.weight.ToString();
+          itemIconImage.sprite = itemData.ItemIcon;
+          itemNameText.text = itemData.ItemName;
+          itemDescriptionText.text = itemData.ItemDescription;
+          itemTypeText.text = itemData.ItemType.ToString();
+          itemRarityText.text = itemData.Rarity.ToString();
+          itemWeightText.text = itemData.Weight.ToString();
           itemQuanityInShopText.text="TBD";
           itemQuanityInInventoryText.text= "TBD";
-          itemBuyingPriceText.text = itemData.item.buyingPrice.ToString();
-          itemSellingPriceText.text = itemData.item.sellingPrice.ToString();
+          itemBuyingPriceText.text = itemData.BuyingPrice.ToString();
+          itemSellingPriceText.text = itemData.SellingPrice.ToString();
         }
 
     }
