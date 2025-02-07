@@ -10,6 +10,7 @@ namespace ServiceLocator.UI
     public class FilterButtonView : MonoBehaviour
     {
         [SerializeField] private Button _filterButton;
+        [SerializeField] private Image _filterButtonImage;
         [SerializeField] private ItemType _filterItemType;
         private EventService _eventService;
         public void Initialize(ItemType filterItemType, EventService eventService)
@@ -17,6 +18,7 @@ namespace ServiceLocator.UI
             this._filterItemType = filterItemType;
             this._eventService = eventService;
             _filterButton.onClick.AddListener(OnFilterButtonClicked);
+            _eventService.OnFilterItemEvent.AddListener(OnFilterUpdateState);
 
         }
 
@@ -29,7 +31,18 @@ namespace ServiceLocator.UI
         {
             _filterButton.Select();
             _eventService.OnFilterItemEvent.Invoke(_filterItemType);
-            Debug.Log(_filterItemType);
+        }
+
+        private void OnFilterUpdateState(ItemType type)
+        {
+            if (_filterItemType == type)
+            {
+                _filterButtonImage.color = Color.white;
+            }
+            else
+            {
+                _filterButtonImage.color = Color.grey;
+            }
         }
     }
 }

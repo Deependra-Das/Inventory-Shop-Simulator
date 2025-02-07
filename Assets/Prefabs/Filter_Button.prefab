@@ -271,4 +271,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filterButton: {fileID: 6243857591355841789}
+  _filterButtonImage: {fileID: 4440993572657894316}
   _filterItemType: 0
