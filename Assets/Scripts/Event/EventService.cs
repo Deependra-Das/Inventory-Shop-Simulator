@@ -12,6 +12,7 @@ namespace ServiceLocator.Event
         public EventController<Action<ItemModel, UIContentPanels>> OnItemButtonClickEvent { get; private set; }
         public EventController<Action<ItemType>> OnFilterItemEvent { get; private set; }
         public EventController<Action> OnGatherResourcesEvent { get; private set; }
+        public EventController<Action<float, float>> OnInventoryWeightUpdateEvent { get; private set; }
 
         public EventService()
         {
@@ -19,6 +20,7 @@ namespace ServiceLocator.Event
             OnItemButtonClickEvent = new EventController<Action<ItemModel, UIContentPanels>>();
             OnFilterItemEvent = new EventController<Action<ItemType>>();
             OnGatherResourcesEvent = new EventController<Action>();
+            OnInventoryWeightUpdateEvent = new EventController<Action<float, float>>();
         }
     }
 }

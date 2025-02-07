@@ -16,7 +16,7 @@ namespace ServiceLocator.Inventory
         public InventoryModel()
         {
             _inventoryItemList = new List<ItemModel>();
-            maxWeight = 20.0f;
+            maxWeight = 100.0f;
             numberOfItemsToSelect = 5;
             SetCurrentInventoryWeight();
         }

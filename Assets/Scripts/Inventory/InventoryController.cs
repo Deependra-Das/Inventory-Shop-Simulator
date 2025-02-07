@@ -98,7 +98,7 @@ namespace ServiceLocator.Inventory
 
             }
 
-
+            _eventService.OnInventoryWeightUpdateEvent.Invoke(_inventoryModel.CurrentInventoryWeight, _inventoryModel.MaxInventoryWeight);
         }
 
         private void OnGatherResources()
@@ -112,7 +112,7 @@ namespace ServiceLocator.Inventory
                 itemControllersList[item].UpdateQuantity(itemControllersList[item].Quantity + GetRandomQuantity(itemControllersList[item].ItemType));
                 Debug.Log(itemControllersList[item].ItemName + " " + item);
             }
-
+            _inventoryModel.SetCurrentInventoryWeight();
             UpdateInventoryUI(_itemTypeSelectedFilter);
         }
 
@@ -145,10 +145,10 @@ namespace ServiceLocator.Inventory
             switch (itemType)
             {
                 case ItemType.Materials:
-                    return Random.Range(20, 100);
+                    return Random.Range(5, 20);
 
                 case ItemType.Weapons:
-                    return Random.Range(5, 10);
+                    return Random.Range(0, 10);
 
                 case ItemType.Consumables:
                     return Random.Range(5, 25);

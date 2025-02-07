@@ -24,7 +24,8 @@ namespace ServiceLocator.UI
         [SerializeField] private GameObject inventoryPanel;
         [SerializeField] private GameObject inventoryContent;
         [SerializeField] private Slider inventoryWeightSlider;
-        [SerializeField] private TextMeshProUGUI inventoryWeightText;
+        [SerializeField] private TextMeshProUGUI inventoryCurrentWeightText;
+        [SerializeField] private TextMeshProUGUI inventoryMaxWeightText;
         [SerializeField] private GameObject gatherButton;
 
         [Header("Currency")]
@@ -59,6 +60,7 @@ namespace ServiceLocator.UI
             this._eventService = eventService;
             _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
+            _eventService.OnInventoryWeightUpdateEvent.AddListener(UpdateInventoryWeight);
             itemDetailsPanel.SetActive(false);
 
             filterButtonList = new List<GameObject>();
@@ -69,6 +71,8 @@ namespace ServiceLocator.UI
         ~UIService()
         {
             _eventService.OnCreateItemButtonUIEvent.RemoveListener(CreateItemButtonPrefab);
+            _eventService.OnItemButtonClickEvent.RemoveListener(ShowItemDetails);
+            _eventService.OnInventoryWeightUpdateEvent.RemoveListener(UpdateInventoryWeight);
         }
 
         public GameObject CreateItemButtonPrefab(UIContentPanels uiPanel)
@@ -140,5 +144,14 @@ namespace ServiceLocator.UI
         {
             _eventService.OnGatherResourcesEvent.Invoke();
         }
+
+        private void UpdateInventoryWeight(float currentWeight, float maxWeight)
+        {
+            inventoryCurrentWeightText.text = currentWeight.ToString();
+            inventoryMaxWeightText.text = " / "+maxWeight.ToString() +" lbs";
+            inventoryWeightSlider.value = currentWeight;
+            inventoryWeightSlider.maxValue = maxWeight;
+        }
+
     }
 }
