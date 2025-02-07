@@ -105,12 +105,9 @@ namespace ServiceLocator.Inventory
         {
             List<int> randomItems = GetRandomItems();
 
-            Debug.Log("- " + itemControllersList.Count);
-
             foreach (int item in randomItems)
             {
                 itemControllersList[item].UpdateQuantity(itemControllersList[item].Quantity + GetRandomQuantity(itemControllersList[item].ItemType));
-                Debug.Log(itemControllersList[item].ItemName + " " + item);
             }
             _inventoryModel.SetCurrentInventoryWeight();
             UpdateInventoryUI(_itemTypeSelectedFilter);
@@ -134,14 +131,11 @@ namespace ServiceLocator.Inventory
                
             }
 
-            Debug.Log("1 - " + selectedItems.Count);
-
             return selectedItems;
         }
 
         private int GetRandomQuantity(ItemType itemType)
         {
-            Debug.Log("- " + itemType);
             switch (itemType)
             {
                 case ItemType.Materials:
