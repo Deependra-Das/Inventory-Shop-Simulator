@@ -10,12 +10,8 @@ namespace ServiceLocator.Shop
         private EventService _eventService;
         private ItemService _itemService;
         private ItemDatabaseScriptableObject _shopInitialData;
-        private ShopScriptableObject _shopCurrentData;
 
-        public ShopService(ShopScriptableObject shopCurrentData) 
-        {
-            this._shopCurrentData = shopCurrentData;
-        }
+        public ShopService() {}
 
         ~ShopService() { }
 
@@ -25,17 +21,9 @@ namespace ServiceLocator.Shop
             this._itemService = itemService;
             this._eventService = eventService;
 
-            shopController = new ShopController(_shopCurrentData, _eventService);
+            shopController = new ShopController(_shopInitialData, _eventService, _itemService);
 
-            PopulateShopData();
-        }
-
-        private void PopulateShopData()
-        {
-            foreach (var itemData in _shopInitialData.itemDataList)
-            {
-                shopController.AddNewItemInShop(itemData, _itemService);
-            }
+            shopController.PopulateShopData();
         }
     }
 }

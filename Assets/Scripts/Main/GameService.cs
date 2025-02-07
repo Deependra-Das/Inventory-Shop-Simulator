@@ -21,9 +21,6 @@ namespace ServiceLocator.Main
         [SerializeField] private ItemView _itemView;
 
         [SerializeField] private ItemDatabaseScriptableObject _itemDatabase;
-        [SerializeField] private ShopScriptableObject _shopCurrentData;
-        [SerializeField] private InventoryScriptableObject _inventoryCurrentData;
-
 
         [SerializeField] private GameObject _shopView;
 
@@ -37,8 +34,8 @@ namespace ServiceLocator.Main
         {
             eventService = new EventService();
             itemService = new ItemService();
-            shopService = new ShopService(_shopCurrentData);
-            inventoryService = new InventoryService(_inventoryCurrentData);
+            shopService = new ShopService();
+            inventoryService = new InventoryService();
         }
 
         private void InjectDependencies()

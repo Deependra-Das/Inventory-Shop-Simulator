@@ -7,35 +7,57 @@ namespace ServiceLocator.Inventory
 {
     public class InventoryController
     {
-        private InventoryScriptableObject _inventoryCurrentData;
-        private List<ItemController> itemControllers;
+        private InventoryModel _inventoryModel;
+        private ItemDatabaseScriptableObject _inventoryInitialData;
+        private List<ItemController> itemControllersList;
         private EventService _eventService;
+        private ItemService _itemService;
 
-        public InventoryController(InventoryScriptableObject inventoryCurrentData, EventService eventService)
+        public InventoryController(ItemDatabaseScriptableObject inventoryInitialData, EventService eventService, ItemService itemService)
         {
-            this._inventoryCurrentData = inventoryCurrentData;
             this._eventService = eventService;
-            itemControllers = new List<ItemController>();
+            this._inventoryInitialData = inventoryInitialData;
+            this._itemService = itemService;
+
+            _inventoryModel = new InventoryModel();
+            _inventoryModel.SetController(this);
+
+            itemControllersList = new List<ItemController>();
+
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
         }
 
         ~InventoryController()
         {
-            this._inventoryCurrentData.inventoryItemList = new List<ItemWithQuantity>();
             _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
         }
-        public void AddNewItemInInventory(ItemWithQuantity itemData, ItemService itemService)
+
+        public void PopulateInventoryData()
         {
-            ItemController itemController = itemService.CreateItem(itemData, UI.UIContentPanels.Inventory);
-            _inventoryCurrentData.inventoryItemList.Add(itemController.ItemData);
-            itemControllers.Add(itemController);
+            foreach (var itemData in _inventoryInitialData.itemDataList)
+            {
+                AddNewItemInInventory(itemData);
+            }
         }
 
-        public List<ItemController> GetAllInventoryItems() => itemControllers;
+        public void AddNewItemInInventory(ItemScriptableObject itemData)
+        {
+            ItemController itemController = _itemService.CreateItem(itemData, UI.UIContentPanels.Inventory);
+            _inventoryModel.AddItem(itemController.GetItemModel);
+            itemControllersList.Add(itemController);
+        }
+
+        public List<ItemController> GetAllInventoryItems() => itemControllersList;
+
 
         private void OnFilterButtonChange(ItemType type)
         {
-            foreach (ItemController itemController in itemControllers)
+            UpdateInventoryUI(type);
+        }
+
+        private void UpdateInventoryUI(ItemType type)
+        {
+            foreach (ItemController itemController in itemControllersList)
             {
                 if (type == ItemType.All)
                 {
@@ -69,7 +91,6 @@ namespace ServiceLocator.Inventory
                 }
 
             }
-
         }
     }
 }

@@ -19,5 +19,5 @@ MonoBehaviour:
   buyingPrice: 20
   sellingPrice: 10
   weight: 0.5
-  quantity: 5
+  quantity: 0
   itemDescription: A potion that restores a small amount of health when consumed.

@@ -9,12 +9,8 @@ namespace ServiceLocator.Inventory
         private EventService _eventService;
         private ItemService _itemService;
         private ItemDatabaseScriptableObject _inventoryInitialData;
-        private InventoryScriptableObject _inventoryCurrentData;
 
-        public InventoryService(InventoryScriptableObject inventoryCurrentData)
-        {
-            this._inventoryCurrentData = inventoryCurrentData;
-        }
+        public InventoryService() { }
 
         ~InventoryService() { }
 
@@ -24,16 +20,9 @@ namespace ServiceLocator.Inventory
             this._itemService = itemService;
             this._eventService = eventService;
 
-            inventoryController = new InventoryController(_inventoryCurrentData, _eventService);
+            inventoryController = new InventoryController(_inventoryInitialData, _eventService, _itemService);
 
-            PopulateInventoryData();
-        }
-        private void PopulateInventoryData()
-        {
-            foreach (var itemData in _inventoryInitialData.itemDataList)
-            {
-                inventoryController.AddNewItemInInventory(itemData, _itemService);
-            }
+            inventoryController.PopulateInventoryData();
         }
     }
 }

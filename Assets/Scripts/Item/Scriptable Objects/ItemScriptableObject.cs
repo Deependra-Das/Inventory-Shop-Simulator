@@ -13,6 +13,7 @@ namespace ServiceLocator.Item
         public float buyingPrice;
         public float sellingPrice;
         public float weight;
+        public int quantity;
         [TextArea] public string itemDescription;
 
     }

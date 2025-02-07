@@ -7,38 +7,71 @@ namespace ServiceLocator.Shop
 {
     public class ShopController
     {
-        private ShopScriptableObject _shopCurrentData;
-        private List<ItemController> itemControllers;
+        private ShopModel _shopModel;
+        private ItemDatabaseScriptableObject _shopInitialData;
+        private List<ItemController> itemControllersList;
         private EventService _eventService;
+        private ItemService _itemService;
 
-        public ShopController(ShopScriptableObject shopCurrentData, EventService eventService)
+        public ShopController(ItemDatabaseScriptableObject shopInitialData, EventService eventService, ItemService itemService)
         {
-            this._shopCurrentData = shopCurrentData;
             this._eventService = eventService;
-           itemControllers = new List<ItemController>();
+            this._shopInitialData = shopInitialData;
+            this._itemService = itemService;
+
+            _shopModel = new ShopModel();
+            _shopModel.SetController(this);
+
+            itemControllersList = new List<ItemController>();
+
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
         }
 
         ~ShopController() 
         {
-            this._shopCurrentData.shopItemList = new List<ItemWithQuantity>();
             _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
         }
-        public void AddNewItemInShop(ItemWithQuantity itemData, ItemService itemService)
+
+        public void PopulateShopData()
         {
-            ItemController itemController = itemService.CreateItem(itemData, UI.UIContentPanels.Shop);
-            _shopCurrentData.shopItemList.Add(itemController.ItemData);
-            itemControllers.Add(itemController);
+            foreach (var itemData in _shopInitialData.itemDataList)
+            {
+                AddNewItemInShop(itemData);
+            }
+
+            SetInitialQuantityShopData();
         }
 
-        public List<ItemController> GetAllShopItems() => itemControllers;
+        public void AddNewItemInShop(ItemScriptableObject itemData)
+        {
+            ItemController itemController = _itemService.CreateItem(itemData, UI.UIContentPanels.Shop);
+            _shopModel.AddItem(itemController.GetItemModel);
+            itemControllersList.Add(itemController);
+        }
+
+        public void SetInitialQuantityShopData()
+        {
+            foreach (ItemController item in itemControllersList)
+            {
+                item.UpdateQuantity(50);
+            }
+
+            UpdateShopUI(ItemType.All);
+        }
+
+        public List<ItemController> GetAllShopItems() => itemControllersList;
 
 
         private void OnFilterButtonChange(ItemType type)
         {
-            foreach (ItemController itemController in itemControllers)
+            UpdateShopUI(type);
+        }
+
+        private void UpdateShopUI(ItemType type)
+        {
+            foreach (ItemController itemController in itemControllersList)
             {
-                if(type == ItemType.All)
+                if (type == ItemType.All)
                 {
                     if (itemController.Quantity > 0)
                     {
@@ -68,9 +101,8 @@ namespace ServiceLocator.Shop
                     }
 
                 }
-             
-            }
 
+            }
         }
     }
 }
