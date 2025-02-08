@@ -12,6 +12,7 @@ namespace ServiceLocator.Shop
         private List<ItemController> itemControllersList;
         private EventService _eventService;
         private ItemService _itemService;
+        private ItemType _itemTypeSelectedFilter;
 
         public ShopController(ItemDatabaseScriptableObject shopInitialData, EventService eventService, ItemService itemService)
         {
@@ -24,12 +25,16 @@ namespace ServiceLocator.Shop
 
             itemControllersList = new List<ItemController>();
 
+            _itemTypeSelectedFilter = ItemType.All;
+
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
+            _eventService.OnSellItemsShopEvent.AddListener(OnSellItemsShop);
         }
 
         ~ShopController() 
         {
             _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
+            _eventService.OnSellItemsShopEvent.RemoveListener(OnSellItemsShop);
         }
 
         public void PopulateShopData()
@@ -64,7 +69,8 @@ namespace ServiceLocator.Shop
 
         private void OnFilterButtonChange(ItemType type)
         {
-            UpdateShopUI(type);
+            _itemTypeSelectedFilter = type;
+            UpdateShopUI(_itemTypeSelectedFilter);
         }
 
         private void UpdateShopUI(ItemType type)
@@ -118,6 +124,22 @@ namespace ServiceLocator.Shop
             }
             return quantity;
 
+        }
+
+        public bool OnSellItemsShop(string itemName, int quantity)
+        {
+            bool itemUpdatedFlag = false;
+            foreach (ItemController itemCon in itemControllersList)
+            {
+                if (itemCon.ItemName == itemName)
+                {
+                    itemCon.UpdateQuantity(itemCon.Quantity + quantity);
+                    itemUpdatedFlag = true;
+                    break;
+                }
+            }
+            UpdateShopUI(_itemTypeSelectedFilter);
+            return itemUpdatedFlag;
         }
     }
 }

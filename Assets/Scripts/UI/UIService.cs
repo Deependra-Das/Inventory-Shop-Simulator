@@ -240,7 +240,14 @@ namespace ServiceLocator.UI
                 _transactionQuantity = 0;
                 _minQuantity = 0;
                 _maxQuantity = quantityInventory;
+                actionButton.onClick.RemoveAllListeners();
+                actionButton.onClick.AddListener(OnSellButtonClicked);
                 SetupTransaction();
+            }
+            else if(uiPanel == UIContentPanels.Shop)
+            {
+                actionButton.onClick.RemoveAllListeners();
+                actionButton.onClick.AddListener(OnBuyButtonClicked);
             }
         }
 
@@ -286,7 +293,11 @@ namespace ServiceLocator.UI
 
         private void UpdateActionButtonState()
         {
-            if (_transactionQuantity * _itemModelForTransaction.Weight >= _maxInventoryWeight - _currentInventoryWeight)
+            if (_transactionType==TransactionType.Buy && (_transactionQuantity == 0 || _transactionQuantity * _itemModelForTransaction.Weight >= _maxInventoryWeight - _currentInventoryWeight))
+            {
+                actionButton.enabled = false;
+            }
+            else if(_transactionType == TransactionType.Sell && _transactionQuantity == 0)
             {
                 actionButton.enabled = false;
             }
@@ -294,6 +305,21 @@ namespace ServiceLocator.UI
             {
                 actionButton.enabled = true;
             }
+        }
+
+        private void OnSellButtonClicked()
+        {
+            Debug.Log("Sell");
+
+            bool result1 = _eventService.OnSellItemsInventoryEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
+            bool result2 = _eventService.OnSellItemsShopEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
+
+            Debug.Log(result1.ToString()+" "+ result2.ToString());
+
+        }
+        private void OnBuyButtonClicked()
+        {
+            Debug.Log("Buy");
         }
     }
 }

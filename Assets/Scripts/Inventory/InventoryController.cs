@@ -29,12 +29,14 @@ namespace ServiceLocator.Inventory
 
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
             _eventService.OnGatherResourcesEvent.AddListener(OnGatherResources);
+            _eventService.OnSellItemsInventoryEvent.AddListener(OnSellItemsInventory);
         }
 
         ~InventoryController()
         {
             _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
             _eventService.OnGatherResourcesEvent.RemoveListener(OnGatherResources);
+            _eventService.OnSellItemsInventoryEvent.RemoveListener(OnSellItemsInventory);
         }
 
         public void PopulateInventoryData()
@@ -176,6 +178,22 @@ namespace ServiceLocator.Inventory
         public float GetMaxInventoryWeight()
         {
             return _inventoryModel.MaxInventoryWeight;
+        }
+
+        public bool OnSellItemsInventory(string itemName,int quantity)
+        {
+            bool itemUpdatedFlag = false;
+            foreach (ItemController itemCon in itemControllersList)
+            {
+                if (itemCon.ItemName == itemName)
+                {
+                    itemCon.UpdateQuantity(itemCon.Quantity - quantity);
+                    itemUpdatedFlag = true;
+                    break;
+                }
+            }
+            UpdateInventoryUI(_itemTypeSelectedFilter);
+            return itemUpdatedFlag;
         }
     }
 }
