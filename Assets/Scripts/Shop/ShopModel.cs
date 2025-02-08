@@ -7,11 +7,11 @@ namespace ServiceLocator.Shop
     {
         private ShopController _shopController;
 
-        private List<ItemModel> shopItemList;
+        private List<ItemController> _shopItemList;
 
         public ShopModel()
         {
-            shopItemList = new List<ItemModel>();
+            _shopItemList = new List<ItemController>();
         }
 
         ~ShopModel() { }
@@ -21,16 +21,17 @@ namespace ServiceLocator.Shop
             _shopController = shopController;
         }
 
-        public void AddItem(ItemModel newItem)
+        public void AddItem(ItemController newItem)
         {
-            shopItemList.Add(newItem);
+            _shopItemList.Add(newItem);
         }
 
-        public void RemoveItem(ItemModel item)
+        public void RemoveItem(ItemController item)
         {
-            shopItemList.Remove(item);
+            _shopItemList.Remove(item);
         }
 
+        public List<ItemController> ShopItemList { get => _shopItemList; }
     }
 }
 

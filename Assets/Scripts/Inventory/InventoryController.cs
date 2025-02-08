@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using ServiceLocator.Item;
 using ServiceLocator.Event;
+using ServiceLocator.Shop;
 
 namespace ServiceLocator.Inventory
 {
@@ -189,5 +190,7 @@ namespace ServiceLocator.Inventory
             UpdateInventoryUI(_itemTypeSelectedFilter);
             return itemUpdatedFlag;
         }
+
+        public List<ItemController> GetAllInventoryItems() => _inventoryModel.InventoryItemList;
     }
 }

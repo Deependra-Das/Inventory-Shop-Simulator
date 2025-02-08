@@ -9,7 +9,7 @@ namespace ServiceLocator.Shop
     {
         private ShopModel _shopModel;
         private ItemDatabaseScriptableObject _shopInitialData;
-        private List<ItemController> itemControllersList;
+
         private EventService _eventService;
         private ItemService _itemService;
         private ItemType _itemTypeSelectedFilter;
@@ -22,8 +22,6 @@ namespace ServiceLocator.Shop
 
             _shopModel = new ShopModel();
             _shopModel.SetController(this);
-
-            itemControllersList = new List<ItemController>();
 
             _itemTypeSelectedFilter = ItemType.All;
 
@@ -50,13 +48,12 @@ namespace ServiceLocator.Shop
         public void AddNewItemInShop(ItemScriptableObject itemData)
         {
             ItemController itemController = _itemService.CreateItem(itemData, UI.UIContentPanels.Shop);
-            _shopModel.AddItem(itemController.GetItemModel);
-            itemControllersList.Add(itemController);
+            _shopModel.AddItem(itemController);
         }
 
         public void SetInitialQuantityShopData()
         {
-            foreach (ItemController item in itemControllersList)
+            foreach (ItemController item in _shopModel.ShopItemList)
             {
                 item.UpdateQuantity(50);
             }
@@ -64,7 +61,7 @@ namespace ServiceLocator.Shop
             UpdateShopUI(ItemType.All);
         }
 
-        public List<ItemController> GetAllShopItems() => itemControllersList;
+        public List<ItemController> GetAllShopItems() => _shopModel.ShopItemList;
 
 
         private void OnFilterButtonChange(ItemType type)
@@ -75,7 +72,7 @@ namespace ServiceLocator.Shop
 
         private void UpdateShopUI(ItemType type)
         {
-            foreach (ItemController itemController in itemControllersList)
+            foreach (ItemController itemController in _shopModel.ShopItemList)
             {
                 if (type == ItemType.All)
                 {
@@ -114,7 +111,7 @@ namespace ServiceLocator.Shop
         public int GetQuantityOfItem(ItemModel item)
         {
             int quantity = 0;
-            foreach (ItemController itemCon in itemControllersList)
+            foreach (ItemController itemCon in _shopModel.ShopItemList)
             { 
                 if(itemCon.ItemName == item.ItemName)
                 {
@@ -129,7 +126,7 @@ namespace ServiceLocator.Shop
         public bool OnSellItemsShop(string itemName, int quantity)
         {
             bool itemUpdatedFlag = false;
-            foreach (ItemController itemCon in itemControllersList)
+            foreach (ItemController itemCon in _shopModel.ShopItemList)
             {
                 if (itemCon.ItemName == itemName)
                 {
