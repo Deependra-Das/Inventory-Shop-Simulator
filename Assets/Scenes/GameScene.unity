@@ -923,7 +923,7 @@ GameObject:
   - component: {fileID: 122535250}
   - component: {fileID: 122535249}
   m_Layer: 5
-  m_Name: Title_Text
+  m_Name: Action_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8527,6 +8527,10 @@ MonoBehaviour:
   itemQuanityInInventoryText: {fileID: 1247212239}
   itemBuyingPriceText: {fileID: 722960467}
   itemSellingPriceText: {fileID: 309683346}
+  actionText: {fileID: 122535249}
+  currencyAmountText: {fileID: 942228855}
+  actionButton: {fileID: 1286154883}
+  actionButtonText: {fileID: 607762395}
   notificationPanel: {fileID: 1770283493}
   notificationContent: {fileID: 1152596935}
   notificationTitle: {fileID: 1664597227}

@@ -54,6 +54,12 @@ namespace ServiceLocator.UI
         [SerializeField] private TextMeshProUGUI itemBuyingPriceText;
         [SerializeField] private TextMeshProUGUI itemSellingPriceText;
 
+        [Header("ActionBar")]
+        [SerializeField] private TextMeshProUGUI actionText;
+        [SerializeField] private TextMeshProUGUI currencyAmountText;
+        [SerializeField] private GameObject actionButton;
+        [SerializeField] private TextMeshProUGUI actionButtonText;
+
         [Header("Notification")]
         [SerializeField] private GameObject notificationPanel;
         [SerializeField] private GameObject notificationContent;
@@ -62,6 +68,11 @@ namespace ServiceLocator.UI
         [SerializeField] private GameObject notificationButton;
 
         private List<GameObject> filterButtonList;
+        private float _currentInventoryWeight;
+        private float _maxInventoryWeight;
+        private int _minQuantity;
+        private int _maxQuantity;
+        private int _currencyAmount;
 
         public UIService() {}
 
@@ -72,6 +83,11 @@ namespace ServiceLocator.UI
             this._inventoryService = inventoryService;
 
             itemDetailsPanel.SetActive(false);
+            _minQuantity = 0;
+            _maxQuantity = 0;
+            _currencyAmount = 0;
+            _maxInventoryWeight = 0;
+            _currentInventoryWeight = 0;
 
             filterButtonList = new List<GameObject>();
             AddFilterButtons();
@@ -141,19 +157,22 @@ namespace ServiceLocator.UI
 
         private void ShowItemDetails(ItemModel itemData, UIContentPanels uiPanel)
         {
-           
+          int quantityShop = _shopService.GetQuantityOfItem(itemData);
+          int quantityInventory = _inventoryService.GetQuantityOfItem(itemData);
+
           itemIconImage.sprite = itemData.ItemIcon;
           itemNameText.text = itemData.ItemName;
           itemDescriptionText.text = itemData.ItemDescription;
           itemTypeText.text = itemData.ItemType.ToString();
           itemRarityText.text = itemData.Rarity.ToString();
           itemWeightText.text = itemData.Weight.ToString();
-          itemQuanityInShopText.text = _shopService.GetQuantityOfItem(itemData).ToString();
-          itemQuanityInInventoryText.text= _inventoryService.GetQuantityOfItem(itemData).ToString(); ;
+          itemQuanityInShopText.text = quantityShop.ToString();
+          itemQuanityInInventoryText.text= quantityInventory.ToString(); ;
           itemBuyingPriceText.text = itemData.BuyingPrice.ToString();
           itemSellingPriceText.text = itemData.SellingPrice.ToString();
 
           itemDetailsPanel.SetActive(true);
+          SetActionBar(itemData, uiPanel, quantityShop, quantityInventory);
         }
 
         private void GatherButtonClicked()
@@ -161,14 +180,18 @@ namespace ServiceLocator.UI
             _eventService.OnGatherResourcesEvent.Invoke();
         }
 
-        private void UpdateInventoryWeight(float currentWeight, float maxWeight)
+        private void UpdateInventoryWeight()
         {
-            inventoryCurrentWeightText.text = currentWeight.ToString();
-            inventoryMaxWeightText.text = " / "+maxWeight.ToString() +" lbs";
-            inventoryWeightSlider.value = currentWeight;
-            inventoryWeightSlider.maxValue = maxWeight;
+           
+            _maxInventoryWeight = _inventoryService.GetMaxInventoryWeight();
+            inventoryMaxWeightText.text = " / " + _maxInventoryWeight.ToString() + " lbs";
+            inventoryWeightSlider.maxValue = _maxInventoryWeight;
 
-            UpdateGatherButtonState(currentWeight, maxWeight);
+            _currentInventoryWeight = _inventoryService.GetCurrentInventoryWeight();
+            inventoryCurrentWeightText.text = _currentInventoryWeight.ToString();
+            inventoryWeightSlider.value = _currentInventoryWeight;
+           
+            UpdateGatherButtonState(_currentInventoryWeight, _maxInventoryWeight);
         }
 
         private void UpdateGatherButtonState(float currentWeight, float maxWeight)
@@ -189,6 +212,18 @@ namespace ServiceLocator.UI
             notificationTitle.text = messageTitle;
             notificationMessage.text = messageText;
             notificationPanel.SetActive(true);
+        }
+
+        private void SetActionBar(ItemModel itemData, UIContentPanels uiPanel, int quantityShop, int quantityInventory)
+        {
+            if(uiPanel == UIContentPanels.Inventory)
+            {
+                actionText.text = "Sell "+ itemData.ItemName;
+                actionButtonText.text = "Sell";
+                currencyAmountText.text = "0";
+
+                _maxQuantity = quantityInventory;
+            }
         }
 
     }

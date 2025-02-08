@@ -98,7 +98,7 @@ namespace ServiceLocator.Inventory
 
             }
 
-            _eventService.OnInventoryWeightUpdateEvent.Invoke(_inventoryModel.CurrentInventoryWeight, _inventoryModel.MaxInventoryWeight);
+            _eventService.OnInventoryWeightUpdateEvent.Invoke();
         }
 
         private void OnGatherResources()
@@ -167,6 +167,15 @@ namespace ServiceLocator.Inventory
             }
             return quantity;
 
+        }
+
+        public float GetCurrentInventoryWeight()
+        {
+            return _inventoryModel.CurrentInventoryWeight;
+        }
+        public float GetMaxInventoryWeight()
+        {
+            return _inventoryModel.MaxInventoryWeight;
         }
     }
 }

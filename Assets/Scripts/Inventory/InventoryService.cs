@@ -1,6 +1,7 @@
 using ServiceLocator.Event;
 using ServiceLocator.Item;
 using ServiceLocator.Shop;
+using static UnityEditor.Progress;
 
 namespace ServiceLocator.Inventory
 {
@@ -29,6 +30,15 @@ namespace ServiceLocator.Inventory
         public int GetQuantityOfItem(ItemModel item)
         {
             return inventoryController.GetQuantityOfItem(item);
+        }
+
+        public float GetCurrentInventoryWeight()
+        {
+            return inventoryController.GetCurrentInventoryWeight();
+        }
+        public float GetMaxInventoryWeight()
+        {
+            return inventoryController.GetMaxInventoryWeight();
         }
     }
 }
