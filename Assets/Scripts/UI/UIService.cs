@@ -242,24 +242,32 @@ namespace ServiceLocator.UI
 
         private void SetActionBar(UIContentPanels uiPanel, int quantityShop, int quantityInventory)
         {
-            if(uiPanel == UIContentPanels.Inventory)
+            _transactionQuantity = 0;
+            _minQuantity = 0;
+            confirmationYesButton.onClick.RemoveAllListeners();
+
+            if (uiPanel == UIContentPanels.Inventory)
             {
                 _transactionType = TransactionType.Sell;
-                actionText.text = "Sell "+ _itemModelForTransaction.ItemName;
-                actionButtonText.text = "Sell";
-                currencyAmountText.text =
-                currencyAmountText.text = "0";
-                _transactionQuantity = 0;
-                _minQuantity = 0;
+                SetUIText(actionText, "Sell " + _itemModelForTransaction.ItemName);
+                SetUIText(actionButtonText, "Sell ");
+                SetUIText(currencyAmountText, "0");
+
                 _maxQuantity = quantityInventory;
-                confirmationYesButton.onClick.RemoveAllListeners();
-                confirmationYesButton.onClick.AddListener(OnSellConfirmaButtonClicked);
-                SetupTransaction();
+                confirmationYesButton.onClick.AddListener(OnSellConfirmButtonClicked);
             }
-            else if(uiPanel == UIContentPanels.Shop)
+            else if (uiPanel == UIContentPanels.Shop)
             {
-                confirmationYesButton.onClick.RemoveAllListeners();
-            }   
+                _transactionType = TransactionType.Buy;
+                SetUIText(actionText, "Buy " + _itemModelForTransaction.ItemName);
+                SetUIText(actionButtonText, "Buy ");
+                SetUIText(currencyAmountText, "0");
+
+                _maxQuantity = GetMaxQuanityToBuy();
+
+                confirmationYesButton.onClick.AddListener(OnBuyConfirmButtonClicked);
+            }
+            SetupTransaction();
         }
 
         private void IncreaseTransactionQuantity()
@@ -289,7 +297,7 @@ namespace ServiceLocator.UI
             }
             else if(_transactionType==TransactionType.Buy)
             {
-
+                _currencyTransactionAmount = _transactionQuantity * _itemModelForTransaction.BuyingPrice;
             }
             UpdateTransactionText();
             UpdateActionButtonState();
@@ -319,6 +327,11 @@ namespace ServiceLocator.UI
             }
         }
 
+        private int GetMaxQuanityToBuy()
+        {
+            return (int)((_maxInventoryWeight - _currentInventoryWeight) / _itemModelForTransaction.Weight);
+        }
+
         private void OnNotificationButtonClicked()
         {
             notificationPanel.SetActive(false);
@@ -335,7 +348,7 @@ namespace ServiceLocator.UI
             confirmationPanel.SetActive(true);
         }
 
-        private void OnSellConfirmaButtonClicked()
+        private void OnSellConfirmButtonClicked()
         {
             Debug.Log("Sell");
 
@@ -357,6 +370,30 @@ namespace ServiceLocator.UI
             _transactionType = TransactionType.None;
             ShowNotification();
             confirmationPanel.SetActive(false);
+        }
+
+        private void OnBuyConfirmButtonClicked()
+        {
+            Debug.Log("Buy");
+
+            //bool result1 = _eventService.OnSellItemsInventoryEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
+            //bool result2 = _eventService.OnSellItemsShopEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
+            //bool result3 = _eventService.OnSellItemsCurrencyEvent.Invoke<bool>(_itemModelForTransaction.SellingPrice * _transactionQuantity);
+
+            //if (result1 && result2 && result3)
+            //{
+            //    SetUIText(currencyText, _currencyService.Currency.ToString());
+            //    SetUIText(notificationTitle, "Success");
+            //    SetUIText(notificationMessage, _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " were sold.");
+            //}
+            //else
+            //{
+            //    SetUIText(notificationTitle, "Failure");
+            //    SetUIText(notificationMessage, "The transaction resulted in an error.");
+            //}
+            //_transactionType = TransactionType.None;
+            //ShowNotification();
+            //confirmationPanel.SetActive(false);
         }
         private void SetUIText(TextMeshProUGUI obj, string messageText)
         {
