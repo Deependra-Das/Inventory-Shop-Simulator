@@ -28,6 +28,7 @@ namespace ServiceLocator.Inventory
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
             _eventService.OnGatherResourcesEvent.AddListener(OnGatherResources);
             _eventService.OnSellItemsInventoryEvent.AddListener(OnSellItemsInventory);
+            _eventService.OnBuyItemsInventoryEvent.AddListener(OnBuyItemsInventory);
         }
 
         ~InventoryController()
@@ -35,6 +36,7 @@ namespace ServiceLocator.Inventory
             _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
             _eventService.OnGatherResourcesEvent.RemoveListener(OnGatherResources);
             _eventService.OnSellItemsInventoryEvent.RemoveListener(OnSellItemsInventory);
+            _eventService.OnBuyItemsInventoryEvent.RemoveListener(OnBuyItemsInventory);
         }
 
         public void PopulateInventoryData()
@@ -182,6 +184,23 @@ namespace ServiceLocator.Inventory
                 if (itemCon.ItemName == itemName)
                 {
                     itemCon.UpdateQuantity(itemCon.Quantity - quantity);
+                    itemUpdatedFlag = true;
+                    break;
+                }
+            }
+            _inventoryModel.SetCurrentInventoryWeight();
+            UpdateInventoryUI(_itemTypeSelectedFilter);
+            return itemUpdatedFlag;
+        }
+
+        public bool OnBuyItemsInventory(string itemName, int quantity)
+        {
+            bool itemUpdatedFlag = false;
+            foreach (ItemController itemCon in _inventoryModel.InventoryItemList)
+            {
+                if (itemCon.ItemName == itemName)
+                {
+                    itemCon.UpdateQuantity(itemCon.Quantity + quantity);
                     itemUpdatedFlag = true;
                     break;
                 }

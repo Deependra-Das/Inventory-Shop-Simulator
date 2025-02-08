@@ -16,6 +16,10 @@ namespace ServiceLocator.Event
         public EventController<Func<string, int, bool>> OnSellItemsInventoryEvent { get; private set; }
         public EventController<Func<string, int, bool>> OnSellItemsShopEvent { get; private set; }
         public EventController<Func<float, bool>> OnSellItemsCurrencyEvent { get; private set; }
+
+        public EventController<Func<string, int, bool>> OnBuyItemsInventoryEvent { get; private set; }
+        public EventController<Func<string, int, bool>> OnBuyItemsShopEvent { get; private set; }
+        public EventController<Func<float, bool>> OnBuyItemsCurrencyEvent { get; private set; }
         public EventService()
         {
             OnCreateItemButtonUIEvent = new EventController<Func<UIContentPanels, GameObject>>();
@@ -26,6 +30,10 @@ namespace ServiceLocator.Event
             OnSellItemsInventoryEvent = new EventController<Func<string, int, bool>>();
             OnSellItemsShopEvent = new EventController<Func<string, int, bool>>();
             OnSellItemsCurrencyEvent = new EventController<Func<float, bool>>();
+
+            OnBuyItemsInventoryEvent = new EventController<Func<string, int, bool>>();
+            OnBuyItemsShopEvent = new EventController<Func<string, int, bool>>();
+            OnBuyItemsCurrencyEvent = new EventController<Func<float, bool>>();
         }
     }
 }

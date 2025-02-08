@@ -16,11 +16,13 @@ namespace ServiceLocator.Currency
         {
             this._eventService = eventService;
             _eventService.OnSellItemsCurrencyEvent.AddListener(OnSellItems);
+            _eventService.OnBuyItemsCurrencyEvent.AddListener(OnBuyItems);
         }
 
         ~CurrencyService() 
         {
             _eventService.OnSellItemsCurrencyEvent.RemoveListener(OnSellItems);
+            _eventService.OnBuyItemsCurrencyEvent.RemoveListener(OnBuyItems);
         }
 
         public void AddCurrency(float amount)
@@ -36,6 +38,11 @@ namespace ServiceLocator.Currency
         public bool OnSellItems(float amount)
         {
             AddCurrency(amount);
+            return true;
+        }
+        public bool OnBuyItems(float amount)
+        {
+            SubtractCurrency(amount);
             return true;
         }
     }
