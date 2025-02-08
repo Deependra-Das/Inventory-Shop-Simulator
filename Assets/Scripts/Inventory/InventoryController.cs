@@ -9,7 +9,6 @@ namespace ServiceLocator.Inventory
     {
         private InventoryModel _inventoryModel;
         private ItemDatabaseScriptableObject _inventoryInitialData;
-        private List<ItemController> itemControllersList;
         private EventService _eventService;
         private ItemService _itemService;
         private ItemType _itemTypeSelectedFilter;
@@ -22,8 +21,6 @@ namespace ServiceLocator.Inventory
 
             _inventoryModel = new InventoryModel();
             _inventoryModel.SetController(this);
-
-            itemControllersList = new List<ItemController>();
 
             _itemTypeSelectedFilter = ItemType.All;
 
@@ -50,12 +47,8 @@ namespace ServiceLocator.Inventory
         public void AddNewItemInInventory(ItemScriptableObject itemData)
         {
             ItemController itemController = _itemService.CreateItem(itemData, UI.UIContentPanels.Inventory);
-            _inventoryModel.AddItem(itemController.GetItemModel);
-            itemControllersList.Add(itemController);
+            _inventoryModel.AddItem(itemController);
         }
-
-        public List<ItemController> GetAllInventoryItems() => itemControllersList;
-
 
         private void OnFilterButtonChange(ItemType type)
         {
@@ -65,7 +58,7 @@ namespace ServiceLocator.Inventory
 
         private void UpdateInventoryUI(ItemType type)
         {
-            foreach (ItemController itemController in itemControllersList)
+            foreach (ItemController itemController in _inventoryModel.InventoryItemList)
             {
                 if (type == ItemType.All)
                 {
@@ -109,7 +102,7 @@ namespace ServiceLocator.Inventory
 
             foreach (int item in randomItems)
             {
-                itemControllersList[item].UpdateQuantity(itemControllersList[item].Quantity + GetRandomQuantity(itemControllersList[item].ItemType));
+                _inventoryModel.InventoryItemList[item].UpdateQuantity(_inventoryModel.InventoryItemList[item].Quantity + GetRandomQuantity(_inventoryModel.InventoryItemList[item].ItemType));
             }
             _inventoryModel.SetCurrentInventoryWeight();
             UpdateInventoryUI(_itemTypeSelectedFilter);
@@ -159,7 +152,7 @@ namespace ServiceLocator.Inventory
         public int GetQuantityOfItem(ItemModel item)
         {
             int quantity = 0;
-            foreach (ItemController itemCon in itemControllersList)
+            foreach (ItemController itemCon in _inventoryModel.InventoryItemList)
             {
                 if (itemCon.ItemName == item.ItemName)
                 {
@@ -183,7 +176,7 @@ namespace ServiceLocator.Inventory
         public bool OnSellItemsInventory(string itemName,int quantity)
         {
             bool itemUpdatedFlag = false;
-            foreach (ItemController itemCon in itemControllersList)
+            foreach (ItemController itemCon in _inventoryModel.InventoryItemList)
             {
                 if (itemCon.ItemName == itemName)
                 {
@@ -192,6 +185,7 @@ namespace ServiceLocator.Inventory
                     break;
                 }
             }
+            _inventoryModel.SetCurrentInventoryWeight();
             UpdateInventoryUI(_itemTypeSelectedFilter);
             return itemUpdatedFlag;
         }

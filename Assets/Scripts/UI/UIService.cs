@@ -66,10 +66,15 @@ namespace ServiceLocator.UI
 
         [Header("Notification")]
         [SerializeField] private GameObject notificationPanel;
-        [SerializeField] private GameObject notificationContent;
         [SerializeField] private TextMeshProUGUI notificationTitle;
         [SerializeField] private TextMeshProUGUI notificationMessage;
-        [SerializeField] private GameObject notificationButton;
+        [SerializeField] private Button notificationButton;
+
+        [Header("Confirmation")]
+        [SerializeField] private GameObject confirmationPanel;
+        [SerializeField] private TextMeshProUGUI confirmationMessage;
+        [SerializeField] private Button confirmationYesButton;
+        [SerializeField] private Button confirmationNoButton;
 
         private List<GameObject> filterButtonList;
         private float _currentInventoryWeight;
@@ -106,6 +111,9 @@ namespace ServiceLocator.UI
             gatherButton.gameObject.GetComponent<Button>().onClick.AddListener(GatherButtonClicked);
             increaseQuantityButton.onClick.AddListener(IncreaseTransactionQuantity);
             decreaseQuantityButton.onClick.AddListener(DecreaseTransactionQuantity);
+            notificationButton.onClick.AddListener(OnNotificationButtonClicked);
+            confirmationNoButton.onClick.AddListener(OnConfirmationNoButtonClicked);
+            actionButton.onClick.AddListener(OnActionButtonClicked);
         }
 
         ~UIService()
@@ -116,6 +124,8 @@ namespace ServiceLocator.UI
             gatherButton.gameObject.GetComponent<Button>().onClick.RemoveListener(GatherButtonClicked);
             increaseQuantityButton.onClick.RemoveListener(IncreaseTransactionQuantity);
             decreaseQuantityButton.onClick.RemoveListener(DecreaseTransactionQuantity);
+            notificationButton.onClick.RemoveListener(OnNotificationButtonClicked);
+            confirmationNoButton.onClick.RemoveListener(OnConfirmationNoButtonClicked);
         }
 
         public GameObject CreateItemButtonPrefab(UIContentPanels uiPanel)
@@ -196,7 +206,6 @@ namespace ServiceLocator.UI
 
         private void UpdateInventoryWeight()
         {
-           
             _maxInventoryWeight = _inventoryService.GetMaxInventoryWeight();
             inventoryMaxWeightText.text = " / " + _maxInventoryWeight.ToString() + " lbs";
             inventoryWeightSlider.maxValue = _maxInventoryWeight;
@@ -240,15 +249,14 @@ namespace ServiceLocator.UI
                 _transactionQuantity = 0;
                 _minQuantity = 0;
                 _maxQuantity = quantityInventory;
-                actionButton.onClick.RemoveAllListeners();
-                actionButton.onClick.AddListener(OnSellButtonClicked);
+                confirmationYesButton.onClick.RemoveAllListeners();
+                confirmationYesButton.onClick.AddListener(OnSellConfirmaButtonClicked);
                 SetupTransaction();
             }
             else if(uiPanel == UIContentPanels.Shop)
             {
-                actionButton.onClick.RemoveAllListeners();
-                actionButton.onClick.AddListener(OnBuyButtonClicked);
-            }
+                confirmationYesButton.onClick.RemoveAllListeners();
+            }   
         }
 
         private void IncreaseTransactionQuantity()
@@ -307,19 +315,31 @@ namespace ServiceLocator.UI
             }
         }
 
-        private void OnSellButtonClicked()
+        private void OnNotificationButtonClicked()
+        {
+            notificationPanel.SetActive(false);
+        }
+
+        private void OnConfirmationNoButtonClicked()
+        {
+            confirmationPanel.SetActive(false);
+            itemDetailsPanel.SetActive(true);
+        }
+        private void OnActionButtonClicked()
+        {
+            itemDetailsPanel.SetActive(false);
+            confirmationPanel.SetActive(true);
+        }
+
+        private void OnSellConfirmaButtonClicked()
         {
             Debug.Log("Sell");
 
             bool result1 = _eventService.OnSellItemsInventoryEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
             bool result2 = _eventService.OnSellItemsShopEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
 
-            Debug.Log(result1.ToString()+" "+ result2.ToString());
-
-        }
-        private void OnBuyButtonClicked()
-        {
-            Debug.Log("Buy");
+            Debug.Log(result1.ToString() + " " + result2.ToString());
+            confirmationPanel.SetActive(false);
         }
     }
 }
