@@ -1,5 +1,6 @@
 using ServiceLocator.Event;
 using ServiceLocator.Item;
+using ServiceLocator.Shop;
 
 namespace ServiceLocator.Inventory
 {
@@ -23,6 +24,11 @@ namespace ServiceLocator.Inventory
             inventoryController = new InventoryController(_inventoryInitialData, _eventService, _itemService);
 
             inventoryController.PopulateInventoryData();
+        }
+
+        public int GetQuantityOfItem(ItemModel item)
+        {
+            return inventoryController.GetQuantityOfItem(item);
         }
     }
 }

@@ -104,5 +104,20 @@ namespace ServiceLocator.Shop
 
             }
         }
+
+        public int GetQuantityOfItem(ItemModel item)
+        {
+            int quantity = 0;
+            foreach (ItemController itemCon in itemControllersList)
+            { 
+                if(itemCon.ItemName == item.ItemName)
+                {
+                    quantity = itemCon.Quantity;
+                    break;
+                }
+            }
+            return quantity;
+
+        }
     }
 }

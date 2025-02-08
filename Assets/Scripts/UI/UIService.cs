@@ -6,12 +6,15 @@ using UnityEngine.UI;
 using ServiceLocator.Item;
 using ServiceLocator.Shop;
 using System;
+using ServiceLocator.Inventory;
 
 namespace ServiceLocator.UI
 {
     public class UIService : MonoBehaviour
     {
         private EventService _eventService;
+        private ShopService _shopService;
+        private InventoryService _inventoryService;
 
         [Header("Item")]
         [SerializeField] private GameObject itemButtonPrefab;
@@ -62,16 +65,20 @@ namespace ServiceLocator.UI
 
         public UIService() {}
 
-        public void Initialize(EventService eventService)
+        public void Initialize(EventService eventService, ShopService shopService, InventoryService inventoryService)
         {
             this._eventService = eventService;
-            _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
-            _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
-            _eventService.OnInventoryWeightUpdateEvent.AddListener(UpdateInventoryWeight);
+            this._shopService = shopService;
+            this._inventoryService = inventoryService;
+
             itemDetailsPanel.SetActive(false);
 
             filterButtonList = new List<GameObject>();
             AddFilterButtons();
+
+            _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
+            _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
+            _eventService.OnInventoryWeightUpdateEvent.AddListener(UpdateInventoryWeight);
             gatherButton.gameObject.GetComponent<Button>().onClick.AddListener(GatherButtonClicked);
         }
 
@@ -134,17 +141,19 @@ namespace ServiceLocator.UI
 
         private void ShowItemDetails(ItemModel itemData, UIContentPanels uiPanel)
         {
-          itemDetailsPanel.SetActive(true);
+           
           itemIconImage.sprite = itemData.ItemIcon;
           itemNameText.text = itemData.ItemName;
           itemDescriptionText.text = itemData.ItemDescription;
           itemTypeText.text = itemData.ItemType.ToString();
           itemRarityText.text = itemData.Rarity.ToString();
           itemWeightText.text = itemData.Weight.ToString();
-          itemQuanityInShopText.text="TBD";
-          itemQuanityInInventoryText.text= "TBD";
+          itemQuanityInShopText.text = _shopService.GetQuantityOfItem(itemData).ToString();
+          itemQuanityInInventoryText.text= _inventoryService.GetQuantityOfItem(itemData).ToString(); ;
           itemBuyingPriceText.text = itemData.BuyingPrice.ToString();
           itemSellingPriceText.text = itemData.SellingPrice.ToString();
+
+          itemDetailsPanel.SetActive(true);
         }
 
         private void GatherButtonClicked()
