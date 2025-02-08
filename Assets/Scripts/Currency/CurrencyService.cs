@@ -28,11 +28,13 @@ namespace ServiceLocator.Currency
         public void AddCurrency(float amount)
         {
             Currency += amount;
+            VerifyMinCurrency();
         }
 
         public void SubtractCurrency(float amount)
         {
             Currency -= amount;
+            VerifyMinCurrency();
         }
 
         public bool OnSellItems(float amount)
@@ -44,6 +46,14 @@ namespace ServiceLocator.Currency
         {
             SubtractCurrency(amount);
             return true;
+        }
+
+        private void VerifyMinCurrency()
+        {
+            if (Currency < 0)
+            {
+                Currency = 0;
+            }
         }
     }
 
