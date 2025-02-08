@@ -222,7 +222,9 @@ namespace ServiceLocator.UI
             if(currentWeight >= maxWeight)
             {
                 gatherButton.gameObject.GetComponent<Button>().interactable = false;
-                ShowNotification("Inventory Max Weight Limit Reached", "Please sell the items from Inventory before gathering more resources.");
+                SetUIText(notificationTitle, "Inventory Max Weight Limit Reached");
+                SetUIText(notificationMessage, "Please sell the items from Inventory before gathering more resources.");
+                ShowNotification();
             }
             else
             {
@@ -230,10 +232,8 @@ namespace ServiceLocator.UI
             }
         }
 
-        private void ShowNotification(string messageTitle, string messageText)
+        private void ShowNotification()
         {
-            notificationTitle.text = messageTitle;
-            notificationMessage.text = messageText;
             notificationPanel.SetActive(true);
         }
 
@@ -295,8 +295,9 @@ namespace ServiceLocator.UI
 
         private void UpdateTransactionText()
         {
-            transactionQuantityText.text = _transactionQuantity.ToString();
-            currencyAmountText.text = _currencyAmount.ToString();
+            SetUIText(transactionQuantityText, _transactionQuantity.ToString());
+            SetUIText(currencyAmountText, _currencyAmount.ToString());
+            SetUIText(confirmationMessage, "Are you sure you want to " + _transactionType.ToString() + " " + _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " ?");
         }
 
         private void UpdateActionButtonState()
@@ -338,8 +339,23 @@ namespace ServiceLocator.UI
             bool result1 = _eventService.OnSellItemsInventoryEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
             bool result2 = _eventService.OnSellItemsShopEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
 
-            Debug.Log(result1.ToString() + " " + result2.ToString());
+            if(result1 && result2)
+            {
+                SetUIText(notificationTitle, "Success");
+                SetUIText(notificationMessage, _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " were sold.");
+            }
+            else
+            {
+                SetUIText(notificationTitle, "Failure");
+                SetUIText(notificationMessage, "The transaction resulted in an error.");
+            }
+            _transactionType = TransactionType.None;
+            ShowNotification();
             confirmationPanel.SetActive(false);
+        }
+        private void SetUIText(TextMeshProUGUI obj, string messageText)
+        {
+            obj.text = messageText;
         }
     }
 }
