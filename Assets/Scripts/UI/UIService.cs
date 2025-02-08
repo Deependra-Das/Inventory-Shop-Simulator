@@ -51,6 +51,13 @@ namespace ServiceLocator.UI
         [SerializeField] private TextMeshProUGUI itemBuyingPriceText;
         [SerializeField] private TextMeshProUGUI itemSellingPriceText;
 
+        [Header("Notification")]
+        [SerializeField] private GameObject notificationPanel;
+        [SerializeField] private GameObject notificationContent;
+        [SerializeField] private TextMeshProUGUI notificationTitle;
+        [SerializeField] private TextMeshProUGUI notificationMessage;
+        [SerializeField] private GameObject notificationButton;
+
         private List<GameObject> filterButtonList;
 
         public UIService() {}
@@ -151,6 +158,28 @@ namespace ServiceLocator.UI
             inventoryMaxWeightText.text = " / "+maxWeight.ToString() +" lbs";
             inventoryWeightSlider.value = currentWeight;
             inventoryWeightSlider.maxValue = maxWeight;
+
+            UpdateGatherButtonState(currentWeight, maxWeight);
+        }
+
+        private void UpdateGatherButtonState(float currentWeight, float maxWeight)
+        {
+            if(currentWeight >= maxWeight)
+            {
+                gatherButton.gameObject.GetComponent<Button>().interactable = false;
+                ShowNotification("Inventory Max Weight Limit Reached", "Please sell the items from Inventory before gathering more resources.");
+            }
+            else
+            {
+                gatherButton.gameObject.GetComponent<Button>().interactable = true;
+            }
+        }
+
+        private void ShowNotification(string messageTitle, string messageText)
+        {
+            notificationTitle.text = messageTitle;
+            notificationMessage.text = messageText;
+            notificationPanel.SetActive(true);
         }
 
     }
