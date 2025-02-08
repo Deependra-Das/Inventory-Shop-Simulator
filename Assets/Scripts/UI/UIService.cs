@@ -307,7 +307,7 @@ namespace ServiceLocator.UI
         {
             SetUIText(transactionQuantityText, _transactionQuantity.ToString());
             SetUIText(currencyAmountText, _currencyTransactionAmount.ToString());
-            SetUIText(confirmationMessage, "Are you sure you want to " + _transactionType.ToString() + " " + _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " ?");
+            SetUIText(confirmationMessage, "Do you want to " + _transactionType.ToString() + " " + _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " ?");
         }
 
 
@@ -342,7 +342,7 @@ namespace ServiceLocator.UI
             {
                 itemDetailsPanel.SetActive(false);
                 SetUIText(notificationTitle, "Low Currency");
-                SetUIText(notificationMessage, "You don't have enough currency to buy th items.");
+                SetUIText(notificationMessage, "You don't have enough currency to buy the items.");
                 ShowNotification();
             }
 
