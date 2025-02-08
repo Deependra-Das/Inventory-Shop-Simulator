@@ -7,6 +7,7 @@ using ServiceLocator.Item;
 using ServiceLocator.Shop;
 using System;
 using ServiceLocator.Inventory;
+using ServiceLocator.Currency;
 
 namespace ServiceLocator.UI
 {
@@ -15,6 +16,7 @@ namespace ServiceLocator.UI
         private EventService _eventService;
         private ShopService _shopService;
         private InventoryService _inventoryService;
+        private CurrencyService _currencyService;
 
         [Header("Item")]
         [SerializeField] private GameObject itemButtonPrefab;
@@ -82,17 +84,18 @@ namespace ServiceLocator.UI
         private int _minQuantity;
         private int _maxQuantity;
         private int _transactionQuantity;
-        private float _currencyAmount;
+        private float _currencyTransactionAmount;
         private TransactionType _transactionType;
         private ItemModel _itemModelForTransaction;
 
         public UIService() {}
 
-        public void Initialize(EventService eventService, ShopService shopService, InventoryService inventoryService)
+        public void Initialize(EventService eventService, ShopService shopService, InventoryService inventoryService, CurrencyService currencyService)
         {
             this._eventService = eventService;
             this._shopService = shopService;
             this._inventoryService = inventoryService;
+            this._currencyService = currencyService;
 
             itemDetailsPanel.SetActive(false);
             _minQuantity = 0;
@@ -101,7 +104,7 @@ namespace ServiceLocator.UI
             _transactionType = TransactionType.None;
             _maxInventoryWeight = 0;
             _currentInventoryWeight = 0;
-            _currencyAmount = 0f;
+            _currencyTransactionAmount = 0f;
             filterButtonList = new List<GameObject>();
             AddFilterButtons();
 
@@ -281,7 +284,7 @@ namespace ServiceLocator.UI
         {
             if(_transactionType==TransactionType.Sell)
             {
-                _currencyAmount = _transactionQuantity * _itemModelForTransaction.SellingPrice;
+                _currencyTransactionAmount = _transactionQuantity * _itemModelForTransaction.SellingPrice;
           
             }
             else if(_transactionType==TransactionType.Buy)
@@ -296,7 +299,7 @@ namespace ServiceLocator.UI
         private void UpdateTransactionText()
         {
             SetUIText(transactionQuantityText, _transactionQuantity.ToString());
-            SetUIText(currencyAmountText, _currencyAmount.ToString());
+            SetUIText(currencyAmountText, _currencyTransactionAmount.ToString());
             SetUIText(confirmationMessage, "Are you sure you want to " + _transactionType.ToString() + " " + _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " ?");
         }
 
@@ -338,9 +341,11 @@ namespace ServiceLocator.UI
 
             bool result1 = _eventService.OnSellItemsInventoryEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
             bool result2 = _eventService.OnSellItemsShopEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
+            bool result3 = _eventService.OnSellItemsCurrencyEvent.Invoke<bool>(_itemModelForTransaction.SellingPrice*_transactionQuantity);
 
-            if(result1 && result2)
+            if (result1 && result2 && result3)
             {
+                SetUIText(currencyText, _currencyService.Currency.ToString());
                 SetUIText(notificationTitle, "Success");
                 SetUIText(notificationMessage, _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " were sold.");
             }
