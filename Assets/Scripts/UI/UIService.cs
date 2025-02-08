@@ -76,8 +76,10 @@ namespace ServiceLocator.UI
         private float _maxInventoryWeight;
         private int _minQuantity;
         private int _maxQuantity;
-        private int transactionQuantity;
-        private int _currencyAmount;
+        private int _transactionQuantity;
+        private float _currencyAmount;
+        private TransactionType _transactionType;
+        private ItemModel _itemModelForTransaction;
 
         public UIService() {}
 
@@ -90,11 +92,11 @@ namespace ServiceLocator.UI
             itemDetailsPanel.SetActive(false);
             _minQuantity = 0;
             _maxQuantity = 0;
-            transactionQuantity = 0;
-            _currencyAmount = 0;
+            _transactionQuantity = 0;
+            _transactionType = TransactionType.None;
             _maxInventoryWeight = 0;
             _currentInventoryWeight = 0;
-
+            _currencyAmount = 0f;
             filterButtonList = new List<GameObject>();
             AddFilterButtons();
 
@@ -183,7 +185,8 @@ namespace ServiceLocator.UI
           itemSellingPriceText.text = itemData.SellingPrice.ToString();
 
           itemDetailsPanel.SetActive(true);
-          SetActionBar(itemData, uiPanel, quantityShop, quantityInventory);
+          _itemModelForTransaction = itemData;
+          SetActionBar(uiPanel, quantityShop, quantityInventory);
         }
 
         private void GatherButtonClicked()
@@ -225,43 +228,72 @@ namespace ServiceLocator.UI
             notificationPanel.SetActive(true);
         }
 
-        private void SetActionBar(ItemModel itemData, UIContentPanels uiPanel, int quantityShop, int quantityInventory)
+        private void SetActionBar(UIContentPanels uiPanel, int quantityShop, int quantityInventory)
         {
             if(uiPanel == UIContentPanels.Inventory)
             {
-                actionText.text = "Sell "+ itemData.ItemName;
+                _transactionType = TransactionType.Sell;
+                actionText.text = "Sell "+ _itemModelForTransaction.ItemName;
                 actionButtonText.text = "Sell";
+                currencyAmountText.text =
                 currencyAmountText.text = "0";
-                transactionQuantity = 0;
+                _transactionQuantity = 0;
                 _minQuantity = 0;
                 _maxQuantity = quantityInventory;
-                UpdateAmountText();
+                SetupTransaction();
             }
         }
 
         private void IncreaseTransactionQuantity()
         {
-            if (transactionQuantity < _maxQuantity)
+            if (_transactionQuantity < _maxQuantity)
             {
-                transactionQuantity++;
-                UpdateAmountText();
+                _transactionQuantity++;
+                SetupTransaction();
             }
         }
 
         private void DecreaseTransactionQuantity()
         {
-            if (transactionQuantity > _minQuantity)
+            if (_transactionQuantity > _minQuantity)
             {
-                transactionQuantity--;
-                UpdateAmountText();
+                _transactionQuantity--;
+                SetupTransaction();
             }
         }
 
-        private void UpdateAmountText()
+        private void SetupTransaction()
         {
-            transactionQuantityText.text = transactionQuantity.ToString();
+            if(_transactionType==TransactionType.Sell)
+            {
+                _currencyAmount = _transactionQuantity * _itemModelForTransaction.SellingPrice;
+          
+            }
+            else if(_transactionType==TransactionType.Buy)
+            {
+
+            }
+            UpdateTransactionText();
+            UpdateActionButtonState();
+
         }
 
+        private void UpdateTransactionText()
+        {
+            transactionQuantityText.text = _transactionQuantity.ToString();
+            currencyAmountText.text = _currencyAmount.ToString();
+        }
 
+        private void UpdateActionButtonState()
+        {
+            if (_transactionQuantity * _itemModelForTransaction.Weight >= _maxInventoryWeight - _currentInventoryWeight)
+            {
+                actionButton.enabled = false;
+            }
+            else
+            {
+                actionButton.enabled = true;
+            }
+        }
     }
 }
