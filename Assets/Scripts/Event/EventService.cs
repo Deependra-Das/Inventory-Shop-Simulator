@@ -15,6 +15,7 @@ namespace ServiceLocator.Event
         public EventController<Action> OnInventoryWeightUpdateEvent { get; private set; }
         public EventController<Func<string, int, bool>> OnSellItemsInventoryEvent { get; private set; }
         public EventController<Func<string, int, bool>> OnSellItemsShopEvent { get; private set; }
+        public EventController<Func<float, bool>> OnSellItemsCurrencyEvent { get; private set; }
         public EventService()
         {
             OnCreateItemButtonUIEvent = new EventController<Func<UIContentPanels, GameObject>>();
@@ -24,6 +25,7 @@ namespace ServiceLocator.Event
             OnInventoryWeightUpdateEvent = new EventController<Action>();
             OnSellItemsInventoryEvent = new EventController<Func<string, int, bool>>();
             OnSellItemsShopEvent = new EventController<Func<string, int, bool>>();
+            OnSellItemsCurrencyEvent = new EventController<Func<float, bool>>();
         }
     }
 }
