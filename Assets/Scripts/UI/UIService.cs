@@ -24,7 +24,9 @@ namespace ServiceLocator.UI
         [SerializeField] private GameObject inventoryPanel;
         [SerializeField] private GameObject inventoryContent;
         [SerializeField] private Slider inventoryWeightSlider;
-        [SerializeField] private TextMeshProUGUI inventoryWeightText;
+        [SerializeField] private TextMeshProUGUI inventoryCurrentWeightText;
+        [SerializeField] private TextMeshProUGUI inventoryMaxWeightText;
+        [SerializeField] private GameObject gatherButton;
 
         [Header("Currency")]
         [SerializeField] private GameObject currencyPanel;
@@ -49,6 +51,13 @@ namespace ServiceLocator.UI
         [SerializeField] private TextMeshProUGUI itemBuyingPriceText;
         [SerializeField] private TextMeshProUGUI itemSellingPriceText;
 
+        [Header("Notification")]
+        [SerializeField] private GameObject notificationPanel;
+        [SerializeField] private GameObject notificationContent;
+        [SerializeField] private TextMeshProUGUI notificationTitle;
+        [SerializeField] private TextMeshProUGUI notificationMessage;
+        [SerializeField] private GameObject notificationButton;
+
         private List<GameObject> filterButtonList;
 
         public UIService() {}
@@ -58,15 +67,19 @@ namespace ServiceLocator.UI
             this._eventService = eventService;
             _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
+            _eventService.OnInventoryWeightUpdateEvent.AddListener(UpdateInventoryWeight);
             itemDetailsPanel.SetActive(false);
 
             filterButtonList = new List<GameObject>();
             AddFilterButtons();
+            gatherButton.gameObject.GetComponent<Button>().onClick.AddListener(GatherButtonClicked);
         }
 
         ~UIService()
         {
             _eventService.OnCreateItemButtonUIEvent.RemoveListener(CreateItemButtonPrefab);
+            _eventService.OnItemButtonClickEvent.RemoveListener(ShowItemDetails);
+            _eventService.OnInventoryWeightUpdateEvent.RemoveListener(UpdateInventoryWeight);
         }
 
         public GameObject CreateItemButtonPrefab(UIContentPanels uiPanel)
@@ -132,6 +145,41 @@ namespace ServiceLocator.UI
           itemQuanityInInventoryText.text= "TBD";
           itemBuyingPriceText.text = itemData.BuyingPrice.ToString();
           itemSellingPriceText.text = itemData.SellingPrice.ToString();
+        }
+
+        private void GatherButtonClicked()
+        {
+            _eventService.OnGatherResourcesEvent.Invoke();
+        }
+
+        private void UpdateInventoryWeight(float currentWeight, float maxWeight)
+        {
+            inventoryCurrentWeightText.text = currentWeight.ToString();
+            inventoryMaxWeightText.text = " / "+maxWeight.ToString() +" lbs";
+            inventoryWeightSlider.value = currentWeight;
+            inventoryWeightSlider.maxValue = maxWeight;
+
+            UpdateGatherButtonState(currentWeight, maxWeight);
+        }
+
+        private void UpdateGatherButtonState(float currentWeight, float maxWeight)
+        {
+            if(currentWeight >= maxWeight)
+            {
+                gatherButton.gameObject.GetComponent<Button>().interactable = false;
+                ShowNotification("Inventory Max Weight Limit Reached", "Please sell the items from Inventory before gathering more resources.");
+            }
+            else
+            {
+                gatherButton.gameObject.GetComponent<Button>().interactable = true;
+            }
+        }
+
+        private void ShowNotification(string messageTitle, string messageText)
+        {
+            notificationTitle.text = messageTitle;
+            notificationMessage.text = messageText;
+            notificationPanel.SetActive(true);
         }
 
     }
