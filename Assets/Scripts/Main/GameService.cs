@@ -41,7 +41,7 @@ namespace ServiceLocator.Main
         private void InjectDependencies()
         {
             itemService.Initialize(eventService);
-            uiService.Initialize(eventService);
+            uiService.Initialize(eventService, shopService, inventoryService);
             shopService.Initialize(_itemDatabase, itemService, eventService);
             inventoryService.Initialize(_itemDatabase, itemService, eventService);
 

@@ -25,5 +25,10 @@ namespace ServiceLocator.Shop
 
             shopController.PopulateShopData();
         }
+
+        public int GetQuantityOfItem(ItemModel item)
+        {
+           return shopController.GetQuantityOfItem(item);
+        }
     }
 }
