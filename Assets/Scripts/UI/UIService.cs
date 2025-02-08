@@ -56,9 +56,13 @@ namespace ServiceLocator.UI
 
         [Header("ActionBar")]
         [SerializeField] private TextMeshProUGUI actionText;
+        [SerializeField] private Button increaseQuantityButton;
+        [SerializeField] private Button decreaseQuantityButton;
+        [SerializeField] private TextMeshProUGUI transactionQuantityText;
         [SerializeField] private TextMeshProUGUI currencyAmountText;
-        [SerializeField] private GameObject actionButton;
+        [SerializeField] private Button actionButton;
         [SerializeField] private TextMeshProUGUI actionButtonText;
+  
 
         [Header("Notification")]
         [SerializeField] private GameObject notificationPanel;
@@ -72,6 +76,7 @@ namespace ServiceLocator.UI
         private float _maxInventoryWeight;
         private int _minQuantity;
         private int _maxQuantity;
+        private int transactionQuantity;
         private int _currencyAmount;
 
         public UIService() {}
@@ -85,6 +90,7 @@ namespace ServiceLocator.UI
             itemDetailsPanel.SetActive(false);
             _minQuantity = 0;
             _maxQuantity = 0;
+            transactionQuantity = 0;
             _currencyAmount = 0;
             _maxInventoryWeight = 0;
             _currentInventoryWeight = 0;
@@ -96,6 +102,8 @@ namespace ServiceLocator.UI
             _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
             _eventService.OnInventoryWeightUpdateEvent.AddListener(UpdateInventoryWeight);
             gatherButton.gameObject.GetComponent<Button>().onClick.AddListener(GatherButtonClicked);
+            increaseQuantityButton.onClick.AddListener(IncreaseTransactionQuantity);
+            decreaseQuantityButton.onClick.AddListener(DecreaseTransactionQuantity);
         }
 
         ~UIService()
@@ -103,6 +111,9 @@ namespace ServiceLocator.UI
             _eventService.OnCreateItemButtonUIEvent.RemoveListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.RemoveListener(ShowItemDetails);
             _eventService.OnInventoryWeightUpdateEvent.RemoveListener(UpdateInventoryWeight);
+            gatherButton.gameObject.GetComponent<Button>().onClick.RemoveListener(GatherButtonClicked);
+            increaseQuantityButton.onClick.RemoveListener(IncreaseTransactionQuantity);
+            decreaseQuantityButton.onClick.RemoveListener(DecreaseTransactionQuantity);
         }
 
         public GameObject CreateItemButtonPrefab(UIContentPanels uiPanel)
@@ -221,10 +232,36 @@ namespace ServiceLocator.UI
                 actionText.text = "Sell "+ itemData.ItemName;
                 actionButtonText.text = "Sell";
                 currencyAmountText.text = "0";
-
+                transactionQuantity = 0;
+                _minQuantity = 0;
                 _maxQuantity = quantityInventory;
+                UpdateAmountText();
             }
         }
+
+        private void IncreaseTransactionQuantity()
+        {
+            if (transactionQuantity < _maxQuantity)
+            {
+                transactionQuantity++;
+                UpdateAmountText();
+            }
+        }
+
+        private void DecreaseTransactionQuantity()
+        {
+            if (transactionQuantity > _minQuantity)
+            {
+                transactionQuantity--;
+                UpdateAmountText();
+            }
+        }
+
+        private void UpdateAmountText()
+        {
+            transactionQuantityText.text = transactionQuantity.ToString();
+        }
+
 
     }
 }
