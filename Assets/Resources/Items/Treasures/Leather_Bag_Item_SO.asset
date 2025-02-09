@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
+  m_Name: Leather_Bag_Item_SO
+  m_EditorClassIdentifier: 
+  itemName: Leather Bag
+  itemIcon: {fileID: -6009198046271197863, guid: f333efbd7e7aefa46a833e87623af42d, type: 3}
+  itemType: 3
+  rarity: 1
+  buyingPrice: 10
+  sellingPrice: 5
+  weight: 2
+  quantity: 0
+  itemDescription: A simple bag made of leather, used for carrying small items.

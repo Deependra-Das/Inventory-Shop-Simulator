@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
+  m_Name: Cut_Topaz_Item_SO
+  m_EditorClassIdentifier: 
+  itemName: Cut Topaz
+  itemIcon: {fileID: 8542204513765946424, guid: 2b3b7339973ee3d4d90b5bf41fdbf061, type: 3}
+  itemType: 3
+  rarity: 3
+  buyingPrice: 400
+  sellingPrice: 200
+  weight: 0.6
+  quantity: 0
+  itemDescription: A topaz gemstone, often used in enchanting and crafting.
