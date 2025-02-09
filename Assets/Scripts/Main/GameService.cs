@@ -49,7 +49,7 @@ namespace ServiceLocator.Main
         private void InjectDependencies()
         {
             itemService.Initialize(eventService);
-            uiService.Initialize(eventService, shopService, inventoryService, currencyService);
+            uiService.Initialize(eventService, shopService, inventoryService, currencyService, soundService);
             shopService.Initialize(_itemDatabase, itemService, eventService);
             inventoryService.Initialize(_itemDatabase, itemService, eventService);
             currencyService.Initialize(eventService);

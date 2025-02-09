@@ -4,9 +4,11 @@ namespace ServiceLocator.Sound
     {
         BackgroundMusic,
         ButtonClick,
+        ButtonDeniedClick,
         ItemClick,
         CurrencyGain,
         CurrencyLoss,
         GatherResources,
+        Notification
     }
 }

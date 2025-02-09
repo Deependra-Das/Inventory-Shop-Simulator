@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioList:
   - soundType: 0
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 41a2a38e726786a44bda344b242c1b56, type: 3}
   - soundType: 1
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 7199f37f75a556d42a11984637d2a4e3, type: 3}
   - soundType: 2
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 53fcf51a0bd585245b563f2b03a06ce7, type: 3}
   - soundType: 3
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 1262cdc111bee764390ad9c53e354252, type: 3}
   - soundType: 4
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 7c0fe1901d91fd04cafe47990e1b663f, type: 3}
   - soundType: 5
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 02d88e4732ddc0647acef290919d0715, type: 3}
+  - soundType: 6
+    audio: {fileID: 8300000, guid: 9f504f0cfbd939f41b62e10abe7d2ecb, type: 3}
+  - soundType: 7
+    audio: {fileID: 8300000, guid: 1e725585dc295d34799f88b2b107e120, type: 3}

@@ -1,5 +1,6 @@
 using ServiceLocator.Event;
 using ServiceLocator.Item;
+using ServiceLocator.Sound;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,12 @@ namespace ServiceLocator.UI
         [SerializeField] private Image _filterButtonImage;
         [SerializeField] private ItemType _filterItemType;
         private EventService _eventService;
-        public void Initialize(ItemType filterItemType, EventService eventService)
+        private SoundService _soundService;
+        public void Initialize(ItemType filterItemType, EventService eventService, SoundService soundService)
         {
             this._filterItemType = filterItemType;
             this._eventService = eventService;
+            this._soundService = soundService;
             _filterButton.onClick.AddListener(OnFilterButtonClicked);
             _eventService.OnFilterItemEvent.AddListener(OnFilterUpdateState);
 
@@ -24,6 +27,7 @@ namespace ServiceLocator.UI
 
         private void OnFilterButtonClicked()
         {
+            _soundService.PlaySFX(SoundType.ButtonClick);
             _eventService.OnFilterItemEvent.Invoke(_filterItemType);
         }
 

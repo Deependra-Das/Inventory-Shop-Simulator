@@ -8,6 +8,7 @@ using ServiceLocator.Shop;
 using System;
 using ServiceLocator.Inventory;
 using ServiceLocator.Currency;
+using ServiceLocator.Sound;
 
 namespace ServiceLocator.UI
 {
@@ -17,6 +18,7 @@ namespace ServiceLocator.UI
         private ShopService _shopService;
         private InventoryService _inventoryService;
         private CurrencyService _currencyService;
+        private SoundService _soundService;
 
         [Header("Item")]
         [SerializeField] private GameObject itemButtonPrefab;
@@ -90,12 +92,13 @@ namespace ServiceLocator.UI
 
         public UIService() {}
 
-        public void Initialize(EventService eventService, ShopService shopService, InventoryService inventoryService, CurrencyService currencyService)
+        public void Initialize(EventService eventService, ShopService shopService, InventoryService inventoryService, CurrencyService currencyService, SoundService soundService)
         {
             this._eventService = eventService;
             this._shopService = shopService;
             this._inventoryService = inventoryService;
             this._currencyService = currencyService;
+            this._soundService = soundService;
 
             itemDetailsPanel.SetActive(false);
             _minQuantity = 0;
@@ -161,7 +164,7 @@ namespace ServiceLocator.UI
                 GameObject filterButton = CreateFilterButtonPrefab(itemType);
 
                 FilterButtonView filterButtonView = filterButton.GetComponent<FilterButtonView>();
-                filterButtonView.Initialize(itemType, _eventService);
+                filterButtonView.Initialize(itemType, _eventService, _soundService);
                 filterButton.GetComponentInChildren<TMP_Text>().text = itemType.ToString();
                 filterButtonList.Add(filterButton);
             }
@@ -183,6 +186,7 @@ namespace ServiceLocator.UI
 
         private void ShowItemDetails(ItemModel itemData, UIContentPanels uiPanel)
         {
+            _soundService.PlaySFX(SoundType.ItemClick);
           int quantityShop = _shopService.GetQuantityOfItem(itemData);
           int quantityInventory = _inventoryService.GetQuantityOfItem(itemData);
 
@@ -204,6 +208,7 @@ namespace ServiceLocator.UI
 
         private void GatherButtonClicked()
         {
+            _soundService.PlaySFX(SoundType.GatherResources);
             _eventService.OnGatherResourcesEvent.Invoke();
         }
 
@@ -237,6 +242,7 @@ namespace ServiceLocator.UI
 
         private void ShowNotification()
         {
+            _soundService.PlaySFX(SoundType.Notification);
             notificationPanel.SetActive(true);
         }
 
@@ -273,6 +279,7 @@ namespace ServiceLocator.UI
 
         private void IncreaseTransactionQuantity()
         {
+            _soundService.PlaySFX(SoundType.ButtonClick);
             if (_transactionQuantity < _maxQuantity)
             {
                 _transactionQuantity++;
@@ -282,6 +289,7 @@ namespace ServiceLocator.UI
 
         private void DecreaseTransactionQuantity()
         {
+            _soundService.PlaySFX(SoundType.ButtonClick);
             if (_transactionQuantity > _minQuantity)
             {
                 _transactionQuantity--;
@@ -318,39 +326,49 @@ namespace ServiceLocator.UI
 
         private void OnNotificationButtonClicked()
         {
+            _soundService.PlaySFX(SoundType.ButtonClick);
             notificationPanel.SetActive(false);
         }
 
         private void OnConfirmationNoButtonClicked()
         {
+            _soundService.PlaySFX(SoundType.ButtonClick);
             confirmationPanel.SetActive(false);
             itemDetailsPanel.SetActive(true);
         }
         private void OnActionButtonClicked()
         {
+
             if(_transactionType == TransactionType.Sell && _transactionQuantity > 0)
             {
+                _soundService.PlaySFX(SoundType.ButtonClick);
                 itemDetailsPanel.SetActive(false);
                 confirmationPanel.SetActive(true);
             }
             else if (_transactionType == TransactionType.Buy && _transactionQuantity > 0 && _currencyService.Currency >0 && _currencyService.Currency >= _currencyTransactionAmount)
             {
+                _soundService.PlaySFX(SoundType.ButtonClick);
                 itemDetailsPanel.SetActive(false);
                 confirmationPanel.SetActive(true);
             }
             else if(_transactionType == TransactionType.Buy && _transactionQuantity >= 0 && (_currencyService.Currency <= 0 || _currencyService.Currency <_currencyTransactionAmount))
             {
+                _soundService.PlaySFX(SoundType.ButtonClick);
                 itemDetailsPanel.SetActive(false);
                 SetUIText(notificationTitle, "Low Currency");
                 SetUIText(notificationMessage, "You don't have enough currency to buy the items.");
                 ShowNotification();
+            }
+            else
+            {
+                _soundService.PlaySFX(SoundType.ButtonDeniedClick);
             }
 
         }
 
         private void OnSellConfirmButtonClicked()
         {
-            Debug.Log("Sell");
+            _soundService.PlaySFX(SoundType.ButtonClick);
 
             bool result1 = _eventService.OnSellItemsInventoryEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
             bool result2 = _eventService.OnSellItemsShopEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
@@ -358,6 +376,7 @@ namespace ServiceLocator.UI
 
             if (result1 && result2 && result3)
             {
+                _soundService.PlaySFX(SoundType.CurrencyGain);
                 SetUIText(currencyText, _currencyService.Currency.ToString());
                 SetUIText(notificationTitle, "Success");
                 SetUIText(notificationMessage, _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " were sold.");
@@ -374,7 +393,7 @@ namespace ServiceLocator.UI
 
         private void OnBuyConfirmButtonClicked()
         {
-            Debug.Log("Buy");
+            _soundService.PlaySFX(SoundType.ButtonClick);
 
             bool result1 = _eventService.OnBuyItemsInventoryEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
             bool result2 = _eventService.OnBuyItemsShopEvent.Invoke<bool>(_itemModelForTransaction.ItemName, _transactionQuantity);
@@ -382,6 +401,7 @@ namespace ServiceLocator.UI
 
             if (result1 && result2 && result3)
             {
+                _soundService.PlaySFX(SoundType.CurrencyLoss);
                 SetUIText(currencyText, _currencyService.Currency.ToString());
                 SetUIText(notificationTitle, "Success");
                 SetUIText(notificationMessage, _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " were bought.");
