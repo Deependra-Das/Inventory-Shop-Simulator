@@ -19,12 +19,15 @@ namespace ServiceLocator.Main
         public UIService uiService;
         public EventService eventService;
         public CurrencyService currencyService;
+        public SoundService soundService;
 
         [SerializeField] private ItemView _itemView;
 
         [SerializeField] private ItemDatabaseScriptableObject _itemDatabase;
+        [SerializeField] private SoundScriptableObject _audioList;
 
-        [SerializeField] private GameObject _shopView;
+        [SerializeField] private AudioSource SFX_AudioSource;
+        [SerializeField] private AudioSource BGM_AudioSource;
 
         void Start()
         {
@@ -36,6 +39,7 @@ namespace ServiceLocator.Main
         private void CreateServices()
         {
             eventService = new EventService();
+            soundService = new SoundService(_audioList, SFX_AudioSource, BGM_AudioSource);
             itemService = new ItemService();
             shopService = new ShopService();
             inventoryService = new InventoryService();
