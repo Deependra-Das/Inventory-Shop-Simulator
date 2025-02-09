@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
-  m_Name: GoldenChalice_Item_SO
+  m_Name: Magic_Wand_Item_SO
   m_EditorClassIdentifier: 
-  itemName: Golden Chalice
-  itemIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  itemType: 3
-  rarity: 1
-  buyingPrice: 250
-  sellingPrice: 150
-  weight: 1.5
+  itemName: Magic Wand
+  itemIcon: {fileID: 0}
+  itemType: 4
+  rarity: 3
+  buyingPrice: 45
+  sellingPrice: 22
+  weight: 1
   quantity: 0
-  itemDescription: A beautifully crafted golden chalice encrusted with gems, highly
-    valuable to collectors.
+  itemDescription: A wand that channels magic, useful for casting spells.
