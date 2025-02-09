@@ -13,6 +13,10 @@ namespace ServiceLocator.UI
         [SerializeField] private Button _filterButton;
         [SerializeField] private Image _filterButtonImage;
         [SerializeField] private ItemType _filterItemType;
+
+        [SerializeField] private Sprite _selectedImage;
+        [SerializeField] private Sprite _unselectedImage;
+
         private EventService _eventService;
         private SoundService _soundService;
         public void Initialize(ItemType filterItemType, EventService eventService, SoundService soundService)
@@ -41,11 +45,11 @@ namespace ServiceLocator.UI
         {
             if (_filterItemType == type)
             {
-                _filterButtonImage.color = Color.white;
+                _filterButtonImage.sprite = _selectedImage;
             }
             else
             {
-                _filterButtonImage.color = Color.grey;
+                _filterButtonImage.sprite = _unselectedImage;
             }
         }
     }
