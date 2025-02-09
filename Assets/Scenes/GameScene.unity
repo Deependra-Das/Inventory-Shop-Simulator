@@ -10001,6 +10001,7 @@ MonoBehaviour:
   itemQuanityInInventoryText: {fileID: 1247212239}
   itemBuyingPriceText: {fileID: 722960467}
   itemSellingPriceText: {fileID: 309683346}
+  itemDetailsCloseButton: {fileID: 1266819937}
   actionText: {fileID: 122535249}
   increaseQuantityButton: {fileID: 561571630}
   decreaseQuantityButton: {fileID: 153605420}

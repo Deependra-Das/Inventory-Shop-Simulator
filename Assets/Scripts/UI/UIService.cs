@@ -57,6 +57,7 @@ namespace ServiceLocator.UI
         [SerializeField] private TextMeshProUGUI itemQuanityInInventoryText;
         [SerializeField] private TextMeshProUGUI itemBuyingPriceText;
         [SerializeField] private TextMeshProUGUI itemSellingPriceText;
+        [SerializeField] private Button itemDetailsCloseButton;
 
         [Header("ActionBar")]
         [SerializeField] private TextMeshProUGUI actionText;
@@ -120,6 +121,7 @@ namespace ServiceLocator.UI
             notificationButton.onClick.AddListener(OnNotificationButtonClicked);
             confirmationNoButton.onClick.AddListener(OnConfirmationNoButtonClicked);
             actionButton.onClick.AddListener(OnActionButtonClicked);
+            itemDetailsCloseButton.onClick.AddListener(OnItemDetailsCloseButtonClicked);
         }
 
         ~UIService()
@@ -132,6 +134,7 @@ namespace ServiceLocator.UI
             decreaseQuantityButton.onClick.RemoveListener(DecreaseTransactionQuantity);
             notificationButton.onClick.RemoveListener(OnNotificationButtonClicked);
             confirmationNoButton.onClick.RemoveListener(OnConfirmationNoButtonClicked);
+            itemDetailsCloseButton.onClick.RemoveListener(OnItemDetailsCloseButtonClicked);
         }
 
         public GameObject CreateItemButtonPrefab(UIContentPanels uiPanel)
@@ -418,6 +421,12 @@ namespace ServiceLocator.UI
         private void SetUIText(TextMeshProUGUI obj, string messageText)
         {
             obj.text = messageText;
+        }
+
+        private void OnItemDetailsCloseButtonClicked()
+        {
+            _soundService.PlaySFX(SoundType.ButtonClick);
+            itemDetailsPanel.SetActive(false);
         }
     }
 }
