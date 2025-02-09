@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
+  m_Name: Monster_Eye_Item_SO
+  m_EditorClassIdentifier: 
+  itemName: Monster Eye
+  itemIcon: {fileID: -4676396471179108511, guid: 62753d2efc0c48d45922eef3bc0b9d76, type: 3}
+  itemType: 2
+  rarity: 3
+  buyingPrice: 150
+  sellingPrice: 75
+  weight: 0.1
+  quantity: 0
+  itemDescription: A rare eye from a powerful monster, used in potions or magic.
