@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
+  m_Name: Basic_Brew_of_Agility_Item_SO
+  m_EditorClassIdentifier: 
+  itemName: Basic Brew of Agility
+  itemIcon: {fileID: 1807888636765205529, guid: c0241bea4c279d648a2f1149d9ea58c9, type: 3}
+  itemType: 1
+  rarity: 2
+  buyingPrice: 50
+  sellingPrice: 25
+  weight: 0.3
+  quantity: 0
+  itemDescription: A simple brew that enhances agility for a short time.

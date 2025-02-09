@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
+  m_Name: Draught_of_Endurance_Item_SO
+  m_EditorClassIdentifier: 
+  itemName: Draught of Endurance
+  itemIcon: {fileID: -1696094994120738339, guid: 36d7a25f3f25f3548bc20803686fcf03, type: 3}
+  itemType: 1
+  rarity: 3
+  buyingPrice: 120
+  sellingPrice: 60
+  weight: 0.35
+  quantity: 0
+  itemDescription: A drink that enhances stamina for an extended period.

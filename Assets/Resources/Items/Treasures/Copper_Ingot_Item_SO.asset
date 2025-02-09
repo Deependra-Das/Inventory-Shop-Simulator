@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
+  m_Name: Copper_Ingot_Item_SO
+  m_EditorClassIdentifier: 
+  itemName: Copper Ingot
+  itemIcon: {fileID: -3212637708197471640, guid: 03908c65263c0bb479ab75bd91bec264, type: 3}
+  itemType: 3
+  rarity: 2
+  buyingPrice: 25
+  sellingPrice: 12
+  weight: 2.2
+  quantity: 0
+  itemDescription: A chunk of copper, used for crafting and smithing.
