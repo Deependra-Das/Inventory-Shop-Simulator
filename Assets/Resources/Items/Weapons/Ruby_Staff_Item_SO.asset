@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ruby_Staff_Item_SO
   m_EditorClassIdentifier: 
   itemName: Ruby Staff
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -4973289320988195577, guid: 66bbe87c088b2644a8d3a66430e0a163, type: 3}
   itemType: 4
   rarity: 4
   buyingPrice: 100

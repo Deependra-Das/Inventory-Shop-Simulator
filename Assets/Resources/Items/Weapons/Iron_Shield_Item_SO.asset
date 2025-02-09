@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron_Shield_Item_SO
   m_EditorClassIdentifier: 
   itemName: Iron Shield
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 3223180940824772514, guid: a0c5bc31c82569e4893251d601ac8a77, type: 3}
   itemType: 4
   rarity: 3
   buyingPrice: 25

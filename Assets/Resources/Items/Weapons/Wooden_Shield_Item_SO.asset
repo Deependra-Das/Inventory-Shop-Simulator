@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wooden_Shield_Item_SO
   m_EditorClassIdentifier: 
   itemName: Wooden Shield
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -7170581808290123246, guid: d5d3f8eba0adfee4d88dd1574d817319, type: 3}
   itemType: 4
   rarity: 1
   buyingPrice: 10

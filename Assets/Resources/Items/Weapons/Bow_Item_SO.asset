@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bow_Item_SO
   m_EditorClassIdentifier: 
   itemName: Bow
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -7856493677412862020, guid: 6ba1b7ac298d0904ebe817a305e0fd42, type: 3}
   itemType: 4
   rarity: 2
   buyingPrice: 15

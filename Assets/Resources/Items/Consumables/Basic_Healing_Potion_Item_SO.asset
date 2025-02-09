@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
+  m_Name: Basic_Healing_Potion_Item_SO
+  m_EditorClassIdentifier: 
+  itemName: Basic Healing Potion
+  itemIcon: {fileID: 2099017491596280000, guid: 07709ec321e793a468c58526daff1fc0, type: 3}
+  itemType: 1
+  rarity: 2
+  buyingPrice: 40
+  sellingPrice: 20
+  weight: 0.25
+  quantity: 0
+  itemDescription: A basic healing potion, restores minor health.

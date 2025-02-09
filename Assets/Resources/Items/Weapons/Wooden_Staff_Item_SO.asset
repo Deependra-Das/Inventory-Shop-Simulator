@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wooden_Staff_Item_SO
   m_EditorClassIdentifier: 
   itemName: Wooden Staff
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -1785618764504776489, guid: aaf9655cc5dd3bf408a1e1e5a8f844e8, type: 3}
   itemType: 4
   rarity: 1
   buyingPrice: 15

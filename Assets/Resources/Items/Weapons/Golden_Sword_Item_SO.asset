@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Golden_Sword_Item_SO
   m_EditorClassIdentifier: 
   itemName: Golden Sword
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -2995627434062683977, guid: 255ee0cd800a982458fee22be2112fc1, type: 3}
   itemType: 4
   rarity: 5
   buyingPrice: 500

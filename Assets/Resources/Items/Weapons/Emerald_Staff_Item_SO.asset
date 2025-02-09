@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Emerald_Staff_Item_SO
   m_EditorClassIdentifier: 
   itemName: Emerald Staff
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 4189788216149518484, guid: 5edbe6bdcb8a4fc4c90ccbceee63447c, type: 3}
   itemType: 4
   rarity: 3
   buyingPrice: 50

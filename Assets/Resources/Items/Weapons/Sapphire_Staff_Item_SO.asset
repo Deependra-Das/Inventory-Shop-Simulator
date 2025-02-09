@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sapphire_Staff_Item_SO
   m_EditorClassIdentifier: 
   itemName: Sapphire Staff
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -4106305270986625221, guid: 6e225c511c81ae84e81c8905f109bac5, type: 3}
   itemType: 4
   rarity: 3
   buyingPrice: 120

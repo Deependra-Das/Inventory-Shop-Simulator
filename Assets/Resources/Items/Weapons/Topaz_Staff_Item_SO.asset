@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Topaz_Staff_Item_SO
   m_EditorClassIdentifier: 
   itemName: Topaz Staff
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -4440257462606480245, guid: 81540f5c93952b34cb67ba2f0726ca22, type: 3}
   itemType: 4
   rarity: 4
   buyingPrice: 110

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shovel_Item_SO
   m_EditorClassIdentifier: 
   itemName: Shovel
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 57591053551863209, guid: ad34354936f9cc9409f12d3a902ac2a6, type: 3}
   itemType: 4
   rarity: 2
   buyingPrice: 10

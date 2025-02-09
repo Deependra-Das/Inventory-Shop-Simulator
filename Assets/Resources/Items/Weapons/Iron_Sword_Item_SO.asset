@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron_Sword_Item_SO
   m_EditorClassIdentifier: 
   itemName: Iron Sword
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 6380105564640697137, guid: 0d1b55aba8e70ed4bbcfbe222c368b03, type: 3}
   itemType: 4
   rarity: 3
   buyingPrice: 30

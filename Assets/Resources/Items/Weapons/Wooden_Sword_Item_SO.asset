@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wooden_Sword_Item_SO
   m_EditorClassIdentifier: 
   itemName: Wooden Sword
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 4476182205578675844, guid: 7b1358d7685dead4aa01bcf1b243c3c6, type: 3}
   itemType: 4
   rarity: 1
   buyingPrice: 8

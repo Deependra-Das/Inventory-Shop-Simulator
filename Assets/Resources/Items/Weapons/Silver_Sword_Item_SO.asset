@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Silver_Sword_Item_SO
   m_EditorClassIdentifier: 
   itemName: Silver Sword
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 4664467146931753940, guid: 32433bf55a488fc4481a1a833105c943, type: 3}
   itemType: 4
   rarity: 3
   buyingPrice: 40

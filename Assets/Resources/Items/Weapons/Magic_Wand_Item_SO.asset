@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Magic_Wand_Item_SO
   m_EditorClassIdentifier: 
   itemName: Magic Wand
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 784421138637080237, guid: d585e341bc959894b8c3eb9977908ff8, type: 3}
   itemType: 4
   rarity: 3
   buyingPrice: 45

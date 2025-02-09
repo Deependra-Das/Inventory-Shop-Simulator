@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Torch_Item_SO
   m_EditorClassIdentifier: 
   itemName: Torch
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -8553596595128423742, guid: 240ea4a0ff4b98b44b03dd1fb24bc53b, type: 3}
   itemType: 4
   rarity: 1
   buyingPrice: 2

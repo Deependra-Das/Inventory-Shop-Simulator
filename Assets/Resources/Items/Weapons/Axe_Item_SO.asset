@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Axe_Item_SO
   m_EditorClassIdentifier: 
   itemName: Axe
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -5825250732961213246, guid: baf8cc2f2913b2941a6d215301364bcd, type: 3}
   itemType: 4
   rarity: 2
   buyingPrice: 12

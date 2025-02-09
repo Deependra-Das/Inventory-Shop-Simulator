@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hammer_Item_SO
   m_EditorClassIdentifier: 
   itemName: Hammer
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 5393448996881579246, guid: 2e2061ebbf66889448e7c890f3eb29aa, type: 3}
   itemType: 4
   rarity: 2
   buyingPrice: 18

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arrow_Item_SO
   m_EditorClassIdentifier: 
   itemName: Arrow
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -4346244404228752641, guid: 8ce29646667bfc942969c9cda9474c50, type: 3}
   itemType: 4
   rarity: 2
   buyingPrice: 1
