@@ -142,10 +142,10 @@ TextureImporter:
       name: slider_bar_texture_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 7
-        width: 308
-        height: 43
+        x: 0
+        y: 0
+        width: 1760
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

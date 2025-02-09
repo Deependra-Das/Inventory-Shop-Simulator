@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f7c9e0ab636c92645a8ba3aff339b9da
+guid: ca6ff2622208caa4e90623519c43ecc8
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -142,10 +142,10 @@ TextureImporter:
       name: button_filter_unselected_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 8
-        width: 149
-        height: 60
+        x: 0
+        y: 0
+        width: 240
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

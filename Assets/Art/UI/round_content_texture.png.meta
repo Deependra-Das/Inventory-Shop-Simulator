@@ -142,10 +142,10 @@ TextureImporter:
       name: round_content_texture_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 11
-        width: 241
-        height: 44
+        x: 0
+        y: 0
+        width: 360
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      round_content_texture_0: -3956714193930737863
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

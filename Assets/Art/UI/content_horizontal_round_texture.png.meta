@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      content_horizontal_round_texture_0: -7811034092425550956
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
