@@ -15,9 +15,9 @@ MonoBehaviour:
   itemName: Crystal
   itemIcon: {fileID: 5293031974318352618, guid: b9fc9f06dee858d42b336d48d1b3887b, type: 3}
   itemType: 2
-  rarity: 0
-  buyingPrice: 0
-  sellingPrice: 0
-  weight: 0
+  rarity: 2
+  buyingPrice: 20
+  sellingPrice: 10
+  weight: 0.4
   quantity: 0
   itemDescription: 

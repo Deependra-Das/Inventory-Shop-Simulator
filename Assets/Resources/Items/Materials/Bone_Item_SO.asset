@@ -15,9 +15,9 @@ MonoBehaviour:
   itemName: Bone
   itemIcon: {fileID: 4056058344551517612, guid: cecf261d60150154fb83770c2fb5a9be, type: 3}
   itemType: 2
-  rarity: 0
-  buyingPrice: 0
-  sellingPrice: 0
-  weight: 0
+  rarity: 1
+  buyingPrice: 5
+  sellingPrice: 2
+  weight: 0.1
   quantity: 0
   itemDescription: 
