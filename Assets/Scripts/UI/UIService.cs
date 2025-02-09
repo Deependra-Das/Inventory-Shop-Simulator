@@ -115,13 +115,16 @@ namespace ServiceLocator.UI
             _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
             _eventService.OnInventoryWeightUpdateEvent.AddListener(UpdateInventoryWeight);
+            _eventService.OnInventoryWeightOvershootEvent.AddListener(OnWeightOvershoot);
+
             gatherButton.gameObject.GetComponent<Button>().onClick.AddListener(GatherButtonClicked);
             increaseQuantityButton.onClick.AddListener(IncreaseTransactionQuantity);
             decreaseQuantityButton.onClick.AddListener(DecreaseTransactionQuantity);
             notificationButton.onClick.AddListener(OnNotificationButtonClicked);
             confirmationNoButton.onClick.AddListener(OnConfirmationNoButtonClicked);
             actionButton.onClick.AddListener(OnActionButtonClicked);
-            itemDetailsCloseButton.onClick.AddListener(OnItemDetailsCloseButtonClicked);
+            itemDetailsCloseButton.onClick.AddListener(OnItemDetailsCloseButtonClicked);           
+            
         }
 
         ~UIService()
@@ -129,6 +132,7 @@ namespace ServiceLocator.UI
             _eventService.OnCreateItemButtonUIEvent.RemoveListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.RemoveListener(ShowItemDetails);
             _eventService.OnInventoryWeightUpdateEvent.RemoveListener(UpdateInventoryWeight);
+            _eventService.OnInventoryWeightOvershootEvent.RemoveListener(OnWeightOvershoot);
             gatherButton.gameObject.GetComponent<Button>().onClick.RemoveListener(GatherButtonClicked);
             increaseQuantityButton.onClick.RemoveListener(IncreaseTransactionQuantity);
             decreaseQuantityButton.onClick.RemoveListener(DecreaseTransactionQuantity);
@@ -233,15 +237,21 @@ namespace ServiceLocator.UI
             if(currentWeight >= maxWeight)
             {
                 gatherButton.gameObject.GetComponent<Button>().interactable = false;
-                SetUIText(notificationTitle, "Inventory Max Weight Limit Reached");
-                SetUIText(notificationMessage, "Please sell the items from Inventory before gathering more resources.");
-                ShowNotification();
             }
             else
             {
                 gatherButton.gameObject.GetComponent<Button>().interactable = true;
             }
         }
+
+        private void OnWeightOvershoot()
+        {
+            SetUIText(notificationTitle, "Inventory Max Weight Limit Reached");
+            SetUIText(notificationMessage, "Please sell the items from Inventory before gathering more resources.");
+            ShowNotification();
+
+        }
+
 
         private void ShowNotification()
         {

@@ -12,6 +12,7 @@ namespace ServiceLocator.Event
         public EventController<Action<ItemModel, UIContentPanels>> OnItemButtonClickEvent { get; private set; }
         public EventController<Action<ItemType>> OnFilterItemEvent { get; private set; }
         public EventController<Action> OnGatherResourcesEvent { get; private set; }
+        public EventController<Action> OnInventoryWeightOvershootEvent { get; private set; }
         public EventController<Action> OnInventoryWeightUpdateEvent { get; private set; }
         public EventController<Func<string, int, bool>> OnSellItemsInventoryEvent { get; private set; }
         public EventController<Func<string, int, bool>> OnSellItemsShopEvent { get; private set; }
@@ -26,6 +27,7 @@ namespace ServiceLocator.Event
             OnItemButtonClickEvent = new EventController<Action<ItemModel, UIContentPanels>>();
             OnFilterItemEvent = new EventController<Action<ItemType>>();
             OnGatherResourcesEvent = new EventController<Action>();
+            OnInventoryWeightOvershootEvent = new EventController<Action>();
             OnInventoryWeightUpdateEvent = new EventController<Action>();
             OnSellItemsInventoryEvent = new EventController<Func<string, int, bool>>();
             OnSellItemsShopEvent = new EventController<Func<string, int, bool>>();

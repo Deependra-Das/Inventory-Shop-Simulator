@@ -127,6 +127,15 @@ namespace ServiceLocator.Inventory
             _inventoryModel.SetCurrentInventoryWeight();
             UpdateInventoryRarityValue();
             UpdateInventoryUI(_itemTypeSelectedFilter);
+            CheckWeightOvershoot();
+        }
+
+        private void CheckWeightOvershoot()
+        {
+            if (_inventoryModel.CurrentInventoryWeight >= _inventoryModel.MaxInventoryWeight)
+            {
+                _eventService.OnInventoryWeightOvershootEvent.Invoke();
+            }
         }
 
         private List<ItemController> GetRandomItems()
@@ -254,7 +263,6 @@ namespace ServiceLocator.Inventory
                     _inventoryRarityValue = itemCon.Rarity;
                 }
             }
-            Debug.Log(_inventoryRarityValue);
         }
     }
 }
