@@ -11,6 +11,7 @@ namespace ServiceLocator.Item
         {
             ItemName = itemDataObj.itemName;
             ItemIcon = itemDataObj.itemIcon;
+            ItemRarityBackground = null;
             ItemDescription = itemDataObj.itemDescription;
             ItemType = itemDataObj.itemType;
             Rarity = itemDataObj.rarity;
@@ -32,6 +33,8 @@ namespace ServiceLocator.Item
 
         public Sprite ItemIcon { get; private set; }
 
+        public Sprite ItemRarityBackground { get; private set; }
+
         public ItemType ItemType { get; private set; }
 
         public ItemRarity Rarity { get; private set; }
@@ -51,6 +54,10 @@ namespace ServiceLocator.Item
             Quantity = newQuantity;
         }
 
+        public void SetItemRarityBackground(Sprite sprite)
+        {
+            ItemRarityBackground = sprite;
+        }
     }
 }
 

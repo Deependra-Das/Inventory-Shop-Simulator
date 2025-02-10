@@ -76,6 +76,7 @@ namespace ServiceLocator.Item
                     _rarityImage.sprite = _rarityImageLegendary;
                     break;
             }
+            _itemController.SetItemRarityBackground(_rarityImage.sprite);
         }
     }
 }
