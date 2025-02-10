@@ -164,6 +164,11 @@ namespace ServiceLocator.Inventory
                 {
                     selectedItems.Add(selectedItem);
                 }
+                else
+                {
+                    i--;
+                    if (i < 0) { i = 0; }
+                }
                
             }
 
