@@ -1,4 +1,4 @@
-namespace ServiceLocator.UI
+namespace ServiceLocator.Main
 {
     public enum TransactionType
     {

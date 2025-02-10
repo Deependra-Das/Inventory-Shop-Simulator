@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using ServiceLocator.Main;
 using ServiceLocator.Item;
 using ServiceLocator.Shop;
 using System;
