@@ -109,11 +109,13 @@ Also for certain scenarios e.g. transactions, **Observer Design Pattern** has be
 ---
 
 ## Architecture Block Diagram
+![BlockDiagram](https://github.com/user-attachments/assets/0437cd29-6509-4228-8131-90bb195183c6)
 
 ---
 
 ## Playable Build
 https://outscal.com/iamdeep75/game/play-inventory-shop-simulator-system-game
+
 ---
 
 ## Watch Gameplay
