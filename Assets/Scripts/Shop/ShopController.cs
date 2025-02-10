@@ -1,14 +1,15 @@
-using ServiceLocator.Item;
+using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 using ServiceLocator.Event;
+using ServiceLocator.Item;
 
 namespace ServiceLocator.Shop
 {
     public class ShopController
     {
         private ShopModel _shopModel;
-        private ItemDatabaseScriptableObject _shopInitialData;
+        private List<ItemScriptableObject> _shopInitialDataOrederd;
 
         private EventService _eventService;
         private ItemService _itemService;
@@ -17,7 +18,11 @@ namespace ServiceLocator.Shop
         public ShopController(ItemDatabaseScriptableObject shopInitialData, EventService eventService, ItemService itemService)
         {
             this._eventService = eventService;
-            this._shopInitialData = shopInitialData;
+            if(shopInitialData!=null)
+            {
+                GetOrderedList(shopInitialData);
+            }
+
             this._itemService = itemService;
 
             _shopModel = new ShopModel();
@@ -39,12 +44,20 @@ namespace ServiceLocator.Shop
 
         public void PopulateShopData()
         {
-            foreach (var itemData in _shopInitialData.itemDataList)
+            if(_shopInitialDataOrederd!=null)
             {
-                AddNewItemInShop(itemData);
-            }
+                foreach (var itemData in _shopInitialDataOrederd)
+                {
+                    AddNewItemInShop(itemData);
+                }
 
-            SetInitialQuantityShopData();
+                SetInitialQuantityShopData();
+            }
+            else
+            {
+                Debug.Log("Shop Data not Found");
+            }
+    
         }
 
         public void AddNewItemInShop(ItemScriptableObject itemData)
@@ -64,7 +77,6 @@ namespace ServiceLocator.Shop
         }
 
         public List<ItemController> GetAllShopItems() => _shopModel.ShopItemList;
-
 
         private void OnFilterButtonChange(ItemType type)
         {
@@ -155,6 +167,15 @@ namespace ServiceLocator.Shop
             }
             UpdateShopUI(_itemTypeSelectedFilter);
             return itemUpdatedFlag;
+        }
+
+        private void GetOrderedList(ItemDatabaseScriptableObject shopInitialData)
+        {
+            _shopInitialDataOrederd = shopInitialData.itemDataList
+            .OrderBy(item => item.itemName)
+            .GroupBy(item => item.itemName)
+            .Select(group => group.First())
+            .ToList();
         }
     }
 }

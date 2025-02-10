@@ -82,5 +82,9 @@ namespace ServiceLocator.Item
            _itemModel.UpdateQuantityData(newQuantity);
             _itemView.UpdateQuantityView();
         }
+        public void SetItemRarityBackground(Sprite sprite)
+        {
+            _itemModel.SetItemRarityBackground(sprite);
+        }
     }
 }

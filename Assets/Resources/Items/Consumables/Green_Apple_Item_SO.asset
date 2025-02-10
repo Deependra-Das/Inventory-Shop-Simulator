@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Green_Apple_Item_SO
   m_EditorClassIdentifier: 
   itemName: Green Apple
-  itemIcon: {fileID: -4953529368547132117, guid: 5e546c7e79f801045bcda522563e39b2, type: 3}
+  itemIcon: {fileID: -1192541474057205494, guid: 90187f91b5d6aa341a78e5f4b55a34ae, type: 3}
   itemType: 1
   rarity: 1
   buyingPrice: 6

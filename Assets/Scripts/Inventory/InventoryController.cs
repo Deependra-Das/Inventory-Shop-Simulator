@@ -3,27 +3,35 @@ using System.Collections.Generic;
 using ServiceLocator.Item;
 using ServiceLocator.Event;
 using ServiceLocator.Shop;
+using System.Linq;
 
 namespace ServiceLocator.Inventory
 {
     public class InventoryController
     {
         private InventoryModel _inventoryModel;
-        private ItemDatabaseScriptableObject _inventoryInitialData;
+        private List<ItemScriptableObject> _inventoryInitialDataOrdered;
         private EventService _eventService;
         private ItemService _itemService;
         private ItemType _itemTypeSelectedFilter;
+        private ItemRarity _inventoryRarityValue;
 
         public InventoryController(ItemDatabaseScriptableObject inventoryInitialData, EventService eventService, ItemService itemService)
         {
             this._eventService = eventService;
-            this._inventoryInitialData = inventoryInitialData;
             this._itemService = itemService;
+
+            if (inventoryInitialData != null)
+            {
+                GetOrderedList(inventoryInitialData);
+            }
+          
 
             _inventoryModel = new InventoryModel();
             _inventoryModel.SetController(this);
 
             _itemTypeSelectedFilter = ItemType.All;
+            _inventoryRarityValue = ItemRarity.Common;
 
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
             _eventService.OnGatherResourcesEvent.AddListener(OnGatherResources);
@@ -41,9 +49,16 @@ namespace ServiceLocator.Inventory
 
         public void PopulateInventoryData()
         {
-            foreach (var itemData in _inventoryInitialData.itemDataList)
+            if (_inventoryInitialDataOrdered != null)
             {
-                AddNewItemInInventory(itemData);
+                foreach (var itemData in _inventoryInitialDataOrdered)
+                {
+                    AddNewItemInInventory(itemData);
+                }
+            }
+            else
+            {
+                Debug.Log("Inventory Data not Found");
             }
         }
 
@@ -101,30 +116,42 @@ namespace ServiceLocator.Inventory
 
         private void OnGatherResources()
         {
-            List<int> randomItems = GetRandomItems();
+            List<ItemController> randomItems = GetRandomItems();
 
-            foreach (int item in randomItems)
+            foreach (ItemController item in randomItems)
             {
-                _inventoryModel.InventoryItemList[item].UpdateQuantity(_inventoryModel.InventoryItemList[item].Quantity + GetRandomQuantity(_inventoryModel.InventoryItemList[item].ItemType));
+                int index = _inventoryModel.InventoryItemList.IndexOf(item);
+
+                _inventoryModel.InventoryItemList[index].UpdateQuantity(_inventoryModel.InventoryItemList[index].Quantity + GetRandomQuantity(_inventoryModel.InventoryItemList[index].Rarity));
             }
             _inventoryModel.SetCurrentInventoryWeight();
+            UpdateInventoryRarityValue();
             UpdateInventoryUI(_itemTypeSelectedFilter);
+            CheckWeightOvershoot();
         }
 
-        private List<int> GetRandomItems()
+        private void CheckWeightOvershoot()
         {
-            List<int> selectedItems = new List<int>(new int[_inventoryModel.InventoryItemList.Count]);
+            if (_inventoryModel.CurrentInventoryWeight >= _inventoryModel.MaxInventoryWeight)
+            {
+                _eventService.OnInventoryWeightOvershootEvent.Invoke();
+            }
+        }
+
+        private List<ItemController> GetRandomItems()
+        {
+            List<ItemController> selectedItems = new List<ItemController>();
 
             int numberOfItemsToSelect = Random.Range(1, 4);  
 
             for (int i = 0; i < numberOfItemsToSelect; i++)
             {
                 int randomIndex = Random.Range(0, _inventoryModel.InventoryItemList.Count);
-                int selectedItem = randomIndex;
+                ItemController selectedItem = _inventoryModel.InventoryItemList[randomIndex];
 
-                if (selectedItems[randomIndex] != selectedItem)
+                if (!selectedItems.Contains(selectedItem) && _inventoryModel.InventoryItemList[randomIndex].Rarity <= _inventoryRarityValue)
                 {
-                    selectedItems.Insert(randomIndex, selectedItem);
+                    selectedItems.Add(selectedItem);
                 }
                
             }
@@ -132,21 +159,24 @@ namespace ServiceLocator.Inventory
             return selectedItems;
         }
 
-        private int GetRandomQuantity(ItemType itemType)
+        private int GetRandomQuantity(ItemRarity itemRarity)
         {
-            switch (itemType)
+            switch (itemRarity)
             {
-                case ItemType.Materials:
+                case ItemRarity.VeryCommon:
                     return Random.Range(5, 20);
 
-                case ItemType.Weapons:
+                case ItemRarity.Common:
                     return Random.Range(0, 10);
 
-                case ItemType.Consumables:
+                case ItemRarity.Rare:
                     return Random.Range(5, 25);
 
-                case ItemType.Treasures:
+                case ItemRarity.Epic:
                     return Random.Range(1, 5);
+
+                case ItemRarity.Legendary:
+                    return Random.Range(1, 2);
                 default:
                     return 0;
             }
@@ -189,6 +219,7 @@ namespace ServiceLocator.Inventory
                 }
             }
             _inventoryModel.SetCurrentInventoryWeight();
+            UpdateInventoryRarityValue();
             UpdateInventoryUI(_itemTypeSelectedFilter);
             return itemUpdatedFlag;
         }
@@ -206,10 +237,32 @@ namespace ServiceLocator.Inventory
                 }
             }
             _inventoryModel.SetCurrentInventoryWeight();
+            UpdateInventoryRarityValue();
             UpdateInventoryUI(_itemTypeSelectedFilter);
             return itemUpdatedFlag;
         }
 
         public List<ItemController> GetAllInventoryItems() => _inventoryModel.InventoryItemList;
+
+        private void GetOrderedList(ItemDatabaseScriptableObject inventoryInitialData)
+        {
+            _inventoryInitialDataOrdered = inventoryInitialData.itemDataList
+            .OrderBy(item => item.itemName)
+            .GroupBy(item => item.itemName)
+            .Select(group => group.First())
+            .ToList();
+        }
+
+        private void UpdateInventoryRarityValue()
+        {
+            _inventoryRarityValue = ItemRarity.Common;
+            foreach (ItemController itemCon in _inventoryModel.InventoryItemList)
+            {
+                if (itemCon.Rarity > _inventoryRarityValue && itemCon.Quantity >0)
+                {
+                    _inventoryRarityValue = itemCon.Rarity;
+                }
+            }
+        }
     }
 }

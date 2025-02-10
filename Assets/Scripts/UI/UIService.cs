@@ -48,6 +48,7 @@ namespace ServiceLocator.UI
         [Header("ItemDetails")]
         [SerializeField] private GameObject itemDetailsPanel;
         [SerializeField] private Image itemIconImage;
+        [SerializeField] private Image itemRarityBackgroundImage;
         [SerializeField] private TextMeshProUGUI itemNameText;
         [SerializeField] private TextMeshProUGUI itemDescriptionText;
         [SerializeField] private TextMeshProUGUI itemTypeText;
@@ -115,13 +116,16 @@ namespace ServiceLocator.UI
             _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
             _eventService.OnInventoryWeightUpdateEvent.AddListener(UpdateInventoryWeight);
+            _eventService.OnInventoryWeightOvershootEvent.AddListener(OnWeightOvershoot);
+
             gatherButton.gameObject.GetComponent<Button>().onClick.AddListener(GatherButtonClicked);
             increaseQuantityButton.onClick.AddListener(IncreaseTransactionQuantity);
             decreaseQuantityButton.onClick.AddListener(DecreaseTransactionQuantity);
             notificationButton.onClick.AddListener(OnNotificationButtonClicked);
             confirmationNoButton.onClick.AddListener(OnConfirmationNoButtonClicked);
             actionButton.onClick.AddListener(OnActionButtonClicked);
-            itemDetailsCloseButton.onClick.AddListener(OnItemDetailsCloseButtonClicked);
+            itemDetailsCloseButton.onClick.AddListener(OnItemDetailsCloseButtonClicked);           
+            
         }
 
         ~UIService()
@@ -129,6 +133,7 @@ namespace ServiceLocator.UI
             _eventService.OnCreateItemButtonUIEvent.RemoveListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.RemoveListener(ShowItemDetails);
             _eventService.OnInventoryWeightUpdateEvent.RemoveListener(UpdateInventoryWeight);
+            _eventService.OnInventoryWeightOvershootEvent.RemoveListener(OnWeightOvershoot);
             gatherButton.gameObject.GetComponent<Button>().onClick.RemoveListener(GatherButtonClicked);
             increaseQuantityButton.onClick.RemoveListener(IncreaseTransactionQuantity);
             decreaseQuantityButton.onClick.RemoveListener(DecreaseTransactionQuantity);
@@ -189,24 +194,26 @@ namespace ServiceLocator.UI
 
         private void ShowItemDetails(ItemModel itemData, UIContentPanels uiPanel)
         {
+            _itemModelForTransaction = itemData;
             _soundService.PlaySFX(SoundType.ItemClick);
-          int quantityShop = _shopService.GetQuantityOfItem(itemData);
-          int quantityInventory = _inventoryService.GetQuantityOfItem(itemData);
+            int quantityShop = _shopService.GetQuantityOfItem(itemData);
+            int quantityInventory = _inventoryService.GetQuantityOfItem(itemData);
 
-          itemIconImage.sprite = itemData.ItemIcon;
-          itemNameText.text = itemData.ItemName;
-          itemDescriptionText.text = itemData.ItemDescription;
-          itemTypeText.text = itemData.ItemType.ToString();
-          itemRarityText.text = itemData.Rarity.ToString();
-          itemWeightText.text = itemData.Weight.ToString();
-          itemQuanityInShopText.text = quantityShop.ToString();
-          itemQuanityInInventoryText.text= quantityInventory.ToString(); ;
-          itemBuyingPriceText.text = itemData.BuyingPrice.ToString();
-          itemSellingPriceText.text = itemData.SellingPrice.ToString();
+            itemIconImage.sprite = _itemModelForTransaction.ItemIcon;
+            itemRarityBackgroundImage.sprite = _itemModelForTransaction.ItemRarityBackground;
+            itemNameText.text = _itemModelForTransaction.ItemName;
+            itemDescriptionText.text = _itemModelForTransaction.ItemDescription;
+            itemTypeText.text = _itemModelForTransaction.ItemType.ToString();
+            itemRarityText.text = _itemModelForTransaction.Rarity.ToString();
+            itemWeightText.text = _itemModelForTransaction.Weight.ToString();
+            itemQuanityInShopText.text = quantityShop.ToString();
+            itemQuanityInInventoryText.text= quantityInventory.ToString(); ;
+            itemBuyingPriceText.text = _itemModelForTransaction.BuyingPrice.ToString();
+            itemSellingPriceText.text = _itemModelForTransaction.SellingPrice.ToString();
 
-          itemDetailsPanel.SetActive(true);
-          _itemModelForTransaction = itemData;
-          SetActionBar(uiPanel, quantityShop, quantityInventory);
+            itemDetailsPanel.SetActive(true);
+
+            SetActionBar(uiPanel, quantityShop, quantityInventory);
         }
 
         private void GatherButtonClicked()
@@ -233,15 +240,21 @@ namespace ServiceLocator.UI
             if(currentWeight >= maxWeight)
             {
                 gatherButton.gameObject.GetComponent<Button>().interactable = false;
-                SetUIText(notificationTitle, "Inventory Max Weight Limit Reached");
-                SetUIText(notificationMessage, "Please sell the items from Inventory before gathering more resources.");
-                ShowNotification();
             }
             else
             {
                 gatherButton.gameObject.GetComponent<Button>().interactable = true;
             }
         }
+
+        private void OnWeightOvershoot()
+        {
+            SetUIText(notificationTitle, "Inventory Max Weight Limit Reached");
+            SetUIText(notificationMessage, "Please sell the items from Inventory before gathering more resources.");
+            ShowNotification();
+
+        }
+
 
         private void ShowNotification()
         {
