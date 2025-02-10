@@ -20,4 +20,6 @@ MonoBehaviour:
   sellingPrice: 2
   weight: 0.1
   quantity: 0
-  itemDescription: 
+  itemDescription: A simple, small shard of bone, commonly found in the wild. While
+    not valuable on its own, it can be used in crafting or as a basic material for
+    various purposes.
