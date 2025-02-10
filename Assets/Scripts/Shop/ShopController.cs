@@ -18,24 +18,38 @@ namespace ServiceLocator.Shop
         public ShopController(ItemDatabaseScriptableObject shopInitialData, EventService eventService, ItemService itemService)
         {
             this._eventService = eventService;
-            if(shopInitialData!=null)
-            {
-                GetOrderedList(shopInitialData);
-            }
-
             this._itemService = itemService;
 
-            _shopModel = new ShopModel();
-            _shopModel.SetController(this);
+            if (shopInitialData!=null)
+            {
+                GetOrderedList(shopInitialData);
 
-            _itemTypeSelectedFilter = ItemType.All;
+                _shopModel = new ShopModel();
+                _shopModel.SetController(this);
 
+                _itemTypeSelectedFilter = ItemType.All;
+
+                SetEventListeners();
+            }
+            else
+            {
+                Debug.Log("Shop Initial Data is Empty");
+            }
+        }
+
+        ~ShopController() 
+        {
+            RemoveEventListeners();
+        }
+
+        private void SetEventListeners()
+        {
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
             _eventService.OnSellItemsShopEvent.AddListener(OnSellItemsShop);
             _eventService.OnBuyItemsShopEvent.AddListener(OnBuyItemsShop);
         }
 
-        ~ShopController() 
+        private void RemoveEventListeners()
         {
             _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
             _eventService.OnSellItemsShopEvent.RemoveListener(OnSellItemsShop);
@@ -55,7 +69,7 @@ namespace ServiceLocator.Shop
             }
             else
             {
-                Debug.Log("Shop Data not Found");
+                Debug.Log("Shop Ordered Data is Empty");
             }
     
         }

@@ -33,7 +33,7 @@ namespace ServiceLocator.UI
         [SerializeField] private Slider inventoryWeightSlider;
         [SerializeField] private TextMeshProUGUI inventoryCurrentWeightText;
         [SerializeField] private TextMeshProUGUI inventoryMaxWeightText;
-        [SerializeField] private GameObject gatherButton;
+        [SerializeField] private Button gatherButton;
 
         [Header("Currency")]
         [SerializeField] private GameObject currencyPanel;
@@ -103,6 +103,23 @@ namespace ServiceLocator.UI
             this._soundService = soundService;
 
             itemDetailsPanel.SetActive(false);
+            notificationPanel.SetActive(false);
+            confirmationPanel.SetActive(false);
+
+            filterButtonList = new List<GameObject>();
+
+            ResetData();
+            AddFilterButtons();
+            SetEventListeners();
+        }
+
+        ~UIService()
+        {
+            RemoveEventListeners();
+        }
+
+        private void ResetData()
+        {
             _minQuantity = 0;
             _maxQuantity = 0;
             _transactionQuantity = 0;
@@ -110,31 +127,31 @@ namespace ServiceLocator.UI
             _maxInventoryWeight = 0;
             _currentInventoryWeight = 0;
             _currencyTransactionAmount = 0f;
-            filterButtonList = new List<GameObject>();
-            AddFilterButtons();
+        }
 
+        private void SetEventListeners()
+        {
             _eventService.OnCreateItemButtonUIEvent.AddListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.AddListener(ShowItemDetails);
             _eventService.OnInventoryWeightUpdateEvent.AddListener(UpdateInventoryWeight);
             _eventService.OnInventoryWeightOvershootEvent.AddListener(OnWeightOvershoot);
 
-            gatherButton.gameObject.GetComponent<Button>().onClick.AddListener(GatherButtonClicked);
+            gatherButton.onClick.AddListener(GatherButtonClicked);
             increaseQuantityButton.onClick.AddListener(IncreaseTransactionQuantity);
             decreaseQuantityButton.onClick.AddListener(DecreaseTransactionQuantity);
             notificationButton.onClick.AddListener(OnNotificationButtonClicked);
             confirmationNoButton.onClick.AddListener(OnConfirmationNoButtonClicked);
             actionButton.onClick.AddListener(OnActionButtonClicked);
-            itemDetailsCloseButton.onClick.AddListener(OnItemDetailsCloseButtonClicked);           
-            
+            itemDetailsCloseButton.onClick.AddListener(OnItemDetailsCloseButtonClicked);
         }
-
-        ~UIService()
+        private void RemoveEventListeners()
         {
             _eventService.OnCreateItemButtonUIEvent.RemoveListener(CreateItemButtonPrefab);
             _eventService.OnItemButtonClickEvent.RemoveListener(ShowItemDetails);
             _eventService.OnInventoryWeightUpdateEvent.RemoveListener(UpdateInventoryWeight);
             _eventService.OnInventoryWeightOvershootEvent.RemoveListener(OnWeightOvershoot);
-            gatherButton.gameObject.GetComponent<Button>().onClick.RemoveListener(GatherButtonClicked);
+
+            gatherButton.onClick.RemoveListener(GatherButtonClicked);
             increaseQuantityButton.onClick.RemoveListener(IncreaseTransactionQuantity);
             decreaseQuantityButton.onClick.RemoveListener(DecreaseTransactionQuantity);
             notificationButton.onClick.RemoveListener(OnNotificationButtonClicked);
@@ -201,15 +218,16 @@ namespace ServiceLocator.UI
 
             itemIconImage.sprite = _itemModelForTransaction.ItemIcon;
             itemRarityBackgroundImage.sprite = _itemModelForTransaction.ItemRarityBackground;
-            itemNameText.text = _itemModelForTransaction.ItemName;
-            itemDescriptionText.text = _itemModelForTransaction.ItemDescription;
-            itemTypeText.text = _itemModelForTransaction.ItemType.ToString();
-            itemRarityText.text = _itemModelForTransaction.Rarity.ToString();
-            itemWeightText.text = _itemModelForTransaction.Weight.ToString();
-            itemQuanityInShopText.text = quantityShop.ToString();
-            itemQuanityInInventoryText.text= quantityInventory.ToString(); ;
-            itemBuyingPriceText.text = _itemModelForTransaction.BuyingPrice.ToString();
-            itemSellingPriceText.text = _itemModelForTransaction.SellingPrice.ToString();
+
+            SetUIText(itemNameText, _itemModelForTransaction.ItemName);
+            SetUIText(itemDescriptionText, _itemModelForTransaction.ItemDescription);
+            SetUIText(itemTypeText, _itemModelForTransaction.ItemType.ToString());
+            SetUIText(itemRarityText, _itemModelForTransaction.Rarity.ToString());
+            SetUIText(itemWeightText, _itemModelForTransaction.Weight.ToString());
+            SetUIText(itemQuanityInShopText, quantityShop.ToString());
+            SetUIText(itemQuanityInInventoryText, quantityInventory.ToString());
+            SetUIText(itemBuyingPriceText, _itemModelForTransaction.BuyingPrice.ToString() + " G");
+            SetUIText(itemSellingPriceText, _itemModelForTransaction.SellingPrice.ToString() + " G");
 
             itemDetailsPanel.SetActive(true);
 
@@ -225,11 +243,12 @@ namespace ServiceLocator.UI
         private void UpdateInventoryWeight()
         {
             _maxInventoryWeight = _inventoryService.GetMaxInventoryWeight();
-            inventoryMaxWeightText.text = " / " + _maxInventoryWeight.ToString() + " lbs";
+            SetUIText(inventoryMaxWeightText, " / " + _maxInventoryWeight.ToString() + " lbs");
             inventoryWeightSlider.maxValue = _maxInventoryWeight;
 
             _currentInventoryWeight = _inventoryService.GetCurrentInventoryWeight();
-            inventoryCurrentWeightText.text = _currentInventoryWeight.ToString();
+            SetUIText(inventoryCurrentWeightText, _currentInventoryWeight.ToString());
+
             inventoryWeightSlider.value = _currentInventoryWeight;
            
             UpdateGatherButtonState(_currentInventoryWeight, _maxInventoryWeight);
@@ -252,9 +271,7 @@ namespace ServiceLocator.UI
             SetUIText(notificationTitle, "Inventory Max Weight Limit Reached");
             SetUIText(notificationMessage, "Please sell the items from Inventory before gathering more resources.");
             ShowNotification();
-
         }
-
 
         private void ShowNotification()
         {
@@ -329,11 +346,15 @@ namespace ServiceLocator.UI
 
         private void UpdateTransactionText()
         {
-            SetUIText(transactionQuantityText, _transactionQuantity.ToString());
-            SetUIText(currencyAmountText, _currencyTransactionAmount.ToString());
-            SetUIText(confirmationMessage, "Do you want to " + _transactionType.ToString() + " " + _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " ?");
-        }
+            string symbolTransaction = "";
 
+            if (_transactionType == TransactionType.Sell && _transactionQuantity>0) symbolTransaction = "+";
+            else if(_transactionType == TransactionType.Buy && _transactionQuantity > 0) symbolTransaction = "-";
+
+            SetUIText(currencyAmountText, symbolTransaction + _currencyTransactionAmount.ToString());
+            SetUIText(transactionQuantityText, _transactionQuantity.ToString());
+            SetUIText(confirmationMessage, "Do you want to " + _transactionType.ToString() + " " + _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " for "+ _currencyTransactionAmount.ToString() + " G ?");
+        }
 
         private int GetMaxQuanityToBuy()
         {
@@ -394,17 +415,16 @@ namespace ServiceLocator.UI
             {
                 _soundService.PlaySFX(SoundType.CurrencyGain);
                 SetUIText(currencyText, _currencyService.Currency.ToString());
-                SetUIText(notificationTitle, "Success");
+                SetUIText(notificationTitle, "Successful Transaction");
                 SetUIText(notificationMessage, _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " were sold.");
             }
             else
             {
                 SetUIText(notificationTitle, "Failure");
-                SetUIText(notificationMessage, "The transaction resulted in an error.");
+                SetUIText(notificationMessage, "The Sell transaction resulted in an error.");
             }
-            _transactionType = TransactionType.None;
-            ShowNotification();
-            confirmationPanel.SetActive(false);
+
+            UpdateAfterTransaction();
         }
 
         private void OnBuyConfirmButtonClicked()
@@ -419,18 +439,24 @@ namespace ServiceLocator.UI
             {
                 _soundService.PlaySFX(SoundType.CurrencyLoss);
                 SetUIText(currencyText, _currencyService.Currency.ToString());
-                SetUIText(notificationTitle, "Success");
+                SetUIText(notificationTitle, "Success Transaction");
                 SetUIText(notificationMessage, _transactionQuantity.ToString() + " " + _itemModelForTransaction.ItemName + " were bought.");
             }
             else
             {
                 SetUIText(notificationTitle, "Failure");
-                SetUIText(notificationMessage, "The transaction resulted in an error.");
+                SetUIText(notificationMessage, "The Buy transaction resulted in an error.");
             }
+
+            UpdateAfterTransaction();
+        }
+        private void UpdateAfterTransaction()
+        {
             _transactionType = TransactionType.None;
             ShowNotification();
             confirmationPanel.SetActive(false);
         }
+
         private void SetUIText(TextMeshProUGUI obj, string messageText)
         {
             obj.text = messageText;

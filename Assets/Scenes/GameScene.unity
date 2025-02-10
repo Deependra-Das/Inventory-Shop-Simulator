@@ -1856,7 +1856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7692419928606541152, guid: b58d590d1db019640b5c8f3068075b73, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 7692419928606541152, guid: b58d590d1db019640b5c8f3068075b73, type: 3}
       propertyPath: m_LocalScale.x
@@ -1904,7 +1904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7692419928606541152, guid: b58d590d1db019640b5c8f3068075b73, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -18.21
       objectReference: {fileID: 0}
     - target: {fileID: 7692419928606541152, guid: b58d590d1db019640b5c8f3068075b73, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2265,11 +2265,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 241669149}
   m_CullTransparentMesh: 1
---- !u!1 &252486800 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6462424665237243404, guid: b58d590d1db019640b5c8f3068075b73, type: 3}
+--- !u!114 &252486801 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5317459411749746614, guid: b58d590d1db019640b5c8f3068075b73, type: 3}
   m_PrefabInstance: {fileID: 207999544}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &265426535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,8 +2524,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 398.5714, y: 0}
-  m_SizeDelta: {x: 157.14282, y: 40}
+  m_AnchoredPosition: {x: 400, y: 0}
+  m_SizeDelta: {x: 320, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &290343121
 MonoBehaviour:
@@ -5248,8 +5254,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 98.57141, y: -20}
-  m_SizeDelta: {x: 80, y: 40}
+  m_AnchoredPosition: {x: 180, y: -20}
+  m_SizeDelta: {x: 240, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &942228855
 MonoBehaviour:
@@ -9620,7 +9626,7 @@ MonoBehaviour:
   inventoryWeightSlider: {fileID: 868962836}
   inventoryCurrentWeightText: {fileID: 1465758495}
   inventoryMaxWeightText: {fileID: 702434311}
-  gatherButton: {fileID: 252486800}
+  gatherButton: {fileID: 252486801}
   currencyPanel: {fileID: 1020136420}
   currencyImage: {fileID: 241669151}
   currencyText: {fileID: 32820373}

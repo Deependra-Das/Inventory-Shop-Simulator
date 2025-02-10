@@ -18,13 +18,14 @@ namespace ServiceLocator.Inventory
 
         public void Initialize(ItemDatabaseScriptableObject inventoryInitialData, ItemService itemService, EventService eventService)
         {
-            this._inventoryInitialData = inventoryInitialData;
             this._itemService = itemService;
             this._eventService = eventService;
 
+            this._inventoryInitialData = inventoryInitialData;
+
             inventoryController = new InventoryController(_inventoryInitialData, _eventService, _itemService);
 
-            inventoryController.PopulateInventoryData();
+            PopulateInventoryData();
         }
 
         public int GetQuantityOfItem(ItemModel item)
@@ -39,6 +40,11 @@ namespace ServiceLocator.Inventory
         public float GetMaxInventoryWeight()
         {
             return inventoryController.GetMaxInventoryWeight();
+        }
+
+        private void PopulateInventoryData()
+        {
+            inventoryController.PopulateInventoryData();
         }
     }
 }

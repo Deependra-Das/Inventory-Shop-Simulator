@@ -17,18 +17,25 @@ namespace ServiceLocator.Shop
 
         public void Initialize(ItemDatabaseScriptableObject shopInitialData, ItemService itemService, EventService eventService)
         {
-            this._shopInitialData = shopInitialData;
             this._itemService = itemService;
             this._eventService = eventService;
 
+            this._shopInitialData = shopInitialData;
+
             shopController = new ShopController(_shopInitialData, _eventService, _itemService);
 
-            shopController.PopulateShopData();
+            PopulateShopData();
         }
 
         public int GetQuantityOfItem(ItemModel item)
         {
            return shopController.GetQuantityOfItem(item);
         }
+
+        private void PopulateShopData()
+        {
+            shopController.PopulateShopData();
+        }
+
     }
 }

@@ -24,22 +24,34 @@ namespace ServiceLocator.Inventory
             if (inventoryInitialData != null)
             {
                 GetOrderedList(inventoryInitialData);
+
+                _inventoryModel = new InventoryModel();
+                _inventoryModel.SetController(this);
+
+                _itemTypeSelectedFilter = ItemType.All;
+                _inventoryRarityValue = ItemRarity.Common;
+                SetEventListeners();
             }
-          
+            else
+            {
+                Debug.Log("Inventory Initial Data is Empty");
+            }                
+        }
 
-            _inventoryModel = new InventoryModel();
-            _inventoryModel.SetController(this);
+        ~InventoryController()
+        {
+            RemoveEventListeners();        
+        }
 
-            _itemTypeSelectedFilter = ItemType.All;
-            _inventoryRarityValue = ItemRarity.Common;
-
+        private void SetEventListeners()
+        {
             _eventService.OnFilterItemEvent.AddListener(OnFilterButtonChange);
             _eventService.OnGatherResourcesEvent.AddListener(OnGatherResources);
             _eventService.OnSellItemsInventoryEvent.AddListener(OnSellItemsInventory);
             _eventService.OnBuyItemsInventoryEvent.AddListener(OnBuyItemsInventory);
         }
 
-        ~InventoryController()
+        private void RemoveEventListeners()
         {
             _eventService.OnFilterItemEvent.RemoveListener(OnFilterButtonChange);
             _eventService.OnGatherResourcesEvent.RemoveListener(OnGatherResources);
@@ -58,7 +70,7 @@ namespace ServiceLocator.Inventory
             }
             else
             {
-                Debug.Log("Inventory Data not Found");
+                Debug.Log("Inventory Ordered Data is Empty");
             }
         }
 
@@ -124,9 +136,8 @@ namespace ServiceLocator.Inventory
 
                 _inventoryModel.InventoryItemList[index].UpdateQuantity(_inventoryModel.InventoryItemList[index].Quantity + GetRandomQuantity(_inventoryModel.InventoryItemList[index].Rarity));
             }
-            _inventoryModel.SetCurrentInventoryWeight();
-            UpdateInventoryRarityValue();
-            UpdateInventoryUI(_itemTypeSelectedFilter);
+
+            UpdateAfterInventoryAction();
             CheckWeightOvershoot();
         }
 
@@ -164,13 +175,13 @@ namespace ServiceLocator.Inventory
             switch (itemRarity)
             {
                 case ItemRarity.VeryCommon:
-                    return Random.Range(5, 20);
+                    return Random.Range(1, 20);
 
                 case ItemRarity.Common:
-                    return Random.Range(0, 10);
+                    return Random.Range(1, 15);
 
                 case ItemRarity.Rare:
-                    return Random.Range(5, 25);
+                    return Random.Range(1, 10);
 
                 case ItemRarity.Epic:
                     return Random.Range(1, 5);
@@ -218,9 +229,9 @@ namespace ServiceLocator.Inventory
                     break;
                 }
             }
-            _inventoryModel.SetCurrentInventoryWeight();
-            UpdateInventoryRarityValue();
-            UpdateInventoryUI(_itemTypeSelectedFilter);
+
+            UpdateAfterInventoryAction();
+
             return itemUpdatedFlag;
         }
 
@@ -236,10 +247,17 @@ namespace ServiceLocator.Inventory
                     break;
                 }
             }
+
+            UpdateAfterInventoryAction();
+
+            return itemUpdatedFlag;
+        }
+
+        private void UpdateAfterInventoryAction()
+        {
             _inventoryModel.SetCurrentInventoryWeight();
             UpdateInventoryRarityValue();
             UpdateInventoryUI(_itemTypeSelectedFilter);
-            return itemUpdatedFlag;
         }
 
         public List<ItemController> GetAllInventoryItems() => _inventoryModel.InventoryItemList;
