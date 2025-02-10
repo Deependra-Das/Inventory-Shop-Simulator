@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec2c3e1e0a54a14e93e02c9c603a7fa, type: 3}
   m_Name: Wooden_Armor_Item_SO
   m_EditorClassIdentifier: 
-  itemName: Wizard Hat
-  itemIcon: {fileID: -1077155908674367464, guid: bbfe9e9f738d33c468bfe8cdc8f0ce43, type: 3}
+  itemName: Wooden Armor
+  itemIcon: {fileID: 6847071528655367535, guid: cce29cab8c8eb264aa675faf1457e98b, type: 3}
   itemType: 3
   rarity: 2
-  buyingPrice: 40
-  sellingPrice: 20
-  weight: 1
+  buyingPrice: 60
+  sellingPrice: 30
+  weight: 17.5
   quantity: 0
-  itemDescription: A basic hat worn by magic users, provides minor magical defense.
+  itemDescription: Basic armor crafted from wood, provides minimal protection.
