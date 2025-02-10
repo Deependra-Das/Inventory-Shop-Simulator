@@ -17,7 +17,7 @@ The goal for the player is to navigate through the menus to gather resources in 
   - **Filters Panel**: Displays filter buttons that player can interact to filter the data in inventory & shop based on item types.
   - **Currency Panel**: Displays the amount of currency the player currently holds.
   - **Item Details Panel**: Displays the details of the item that the player clicks on either in shop or inventory. Based on shop or inventory, the Action section will change to Buy or Sell.
-  - **Notification Panel**: Dialogue box to display a notification to the player with a message & a button for acknoledgement.
+  - **Notification Panel**: Dialogue box to display a notification to the player with a message & a button for acknowledgement.
   - **Confirmation Panel**: Dialogue box to asl for confirmation from player before a transaction. If Yes, the selected transaction will proceed.
 
 ### Item Details
@@ -108,13 +108,13 @@ Also for certain scenarios e.g. transactions, **Observer Design Pattern** has be
 
 ---
 
-## Block Diagram
+## Architecture Block Diagram
 
 ---
 
 ## Playable Build
-
+https://outscal.com/iamdeep75/game/play-inventory-shop-simulator-system-game
 ---
 
-## Watch here-
+## Watch Gameplay
 https://youtu.be/jq_UYKmiVgo
