@@ -1,7 +1,5 @@
 using ServiceLocator.Event;
 using ServiceLocator.Item;
-using ServiceLocator.Shop;
-using static UnityEditor.Progress;
 
 namespace ServiceLocator.Inventory
 {
